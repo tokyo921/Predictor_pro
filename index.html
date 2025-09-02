@@ -1,203 +1,53 @@
-<!DOCTYPE html>
-<html lang="pt">
+<!doctype html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Página Aviator Predictor</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>شبكة إشارات عشوائية</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(to bottom, #060b1a, #000000);
-      color: white;
-      text-align: center;
-    }
-    .button {
-      background: linear-gradient(45deg, #d4145a, #fbb03b);
-      border: none;
-      border-radius: 20px;
-      color: white;
-      padding: 15px 30px;
-      margin: 10px;
-      font-size: 1.2em;
-      cursor: pointer;
-      box-shadow: 0 0 20px rgba(255, 0, 100, 0.6);
-      text-decoration: none;
-      display: inline-block;
-    }
-    .button-green {
-      background: linear-gradient(45deg, #0f0, #0c0);
-      box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
-      animation: pulse 1.5s infinite;
-      color: black;
-    }
-    @keyframes pulse {
-      0% { box-shadow: 0 0 10px #0f0; }
-      50% { box-shadow: 0 0 30px #0f0; }
-      100% { box-shadow: 0 0 10px #0f0; }
-    }
-    .section { padding: 30px 20px; }
-    #signal-display {
-      font-size: 1.5em;
-      color: #00ffcc;
-      margin-top: 20px;
-    }
-    #id-input-section {
-      display: none;
-      margin-top: 20px;
-    }
-    #id-input-section input {
-      padding: 10px;
-      font-size: 1em;
-      border-radius: 8px;
-      border: none;
-      margin-top: 10px;
-      width: 220px;
-      text-align: center;
-    }
-    #id-confirm-btn, #deposit-btn {
-      margin-top: 10px;
-      background-color: #00ff00;
-      color: #000;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    #balance-warning {
-      margin-top: 15px;
-      font-size: 1.1em;
-      color: #ff5050;
-    }
-    table {
-      margin: 0 auto;
-      border-collapse: collapse;
-      width: 80%;
-      margin-bottom: 40px;
-    }
-    th, td {
-      padding: 12px;
-      border-bottom: 1px solid #444;
-    }
-    .comment {
-      background: #111c2b;
-      margin: 10px auto;
-      padding: 15px;
-      border-radius: 15px;
-      max-width: 700px;
-      display: flex;
-      align-items: center;
-    }
-    .comment img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      margin-right: 15px;
-    }
-    .comment-info span:first-child {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
+    :root { font-family: "Noto Naskh Arabic", Tahoma, Arial, sans-serif; }
+    body { margin:0; padding:20px; background:#0b1220; color:#e6eef8; }
+    h1 { text-align:center; margin-bottom:20px; }
+    .grid { display:grid; grid-template-columns: repeat(5,60px); grid-gap:6px; justify-content:center; }
+    .cell { width:60px; height:60px; display:flex; align-items:center; justify-content:center; background:#1e293b; border-radius:6px; font-size:22px; cursor:pointer; }
+    .highlight { background:#22c55e !important; color:#fff; font-weight:bold; }
+    .controls { margin-top:20px; text-align:center; }
+    button { padding:10px 16px; border-radius:8px; border:0; background:#2563eb; color:#fff; cursor:pointer; font-weight:600; }
+    .log { margin-top:20px; background:#1e293b; padding:10px; border-radius:8px; max-width:340px; margin-left:auto; margin-right:auto; text-align:center; }
   </style>
 </head>
 <body>
-  <div class="section">
-    <h1>🚀 A tua vez ainda não acabou! Faltam apenas alguns segundos para a próxima jogada!</h1>
-    <a class="button" href="https://t.me/Rafael_Predictor_bot" target="_blank">✉️ Falar com Rafael</a>
-    <a class="button" href="https://reffpa.com/L?tag=d_4302891m_19545c_&site=4302891&ad=19545&r=registration" target="_blank">🎮 Jogar Aviator</a>
-    <button class="button button-green" onclick="getSignal()">✅ Obter Sinal</button>
-    <div id="signal-display"></div>
+  <h1>إشارات تجريبية عشوائية</h1>
+  <div class="grid" id="grid"></div>
+  <div class="controls">
+    <button id="next">إشارة جديدة</button>
   </div>
-
-  <div id="id-input-section" class="section">
-    <h2>Introduza o seu número de ID 1xBet</h2>
-    <input 
-      type="text" 
-      id="user-id" 
-      placeholder="Digite o seu ID 1xBet" 
-      maxlength="10" 
-      pattern="\d{10}" 
-      oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
-    <br>
-    <button id="id-confirm-btn" onclick="handleIdSubmit()">Confirmar ID</button>
-    <div id="balance-warning"></div>
-    <a id="deposit-btn" href="https://reffpa.com/L?tag=d_4302891m_19545c_&site=4302891&ad=19545&r=registration" target="_blank" style="display:none">🤑 Depositar na Conta</a>
-  </div>
-
-  <div class="section">
-    <h2>🏆 Vencedores Recentes</h2>
-    <table>
-      <tr><th>Nome</th><th>Comentário</th><th>Lucro</th></tr>
-      <tr><td>Ahmed Aravi</td><td>Obrigado Rafael, já consegui pagar a minha dívida e agora vivo tranquilo</td><td>45,200 MZN</td></tr>
-      <tr><td>Sérgio Matola</td><td>No início não acreditava, agora jogo todos os dias</td><td>88,300 MZN</td></tr>
-      <tr><td>Nádia Cossa</td><td>Confiável! Graças ao Rafael agora tenho liberdade financeira</td><td>65,700 MZN</td></tr>
-      <tr><td>João Manjate</td><td>Já não preciso procurar outro trabalho, tenho tudo que quero!</td><td>73,150 MZN</td></tr>
-    </table>
-  </div>
-
-  <div class="section">
-    <div class="comment">
-      <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="avatar">
-      <div class="comment-info">
-        <span>Arlindo Mussa</span>
-        <span>Obrigado Rafael, paguei minhas dívidas e agora estou em paz!</span>
-      </div>
-    </div>
-    <div class="comment">
-      <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="avatar">
-      <div class="comment-info">
-        <span>Carlos Zandamela</span>
-        <span>No início achei que não era verdade, mas já ganhei muito!</span>
-      </div>
-    </div>
-    <div class="comment">
-      <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="avatar">
-      <div class="comment-info">
-        <span>Nádia Cossa</span>
-        <span>Agora tenho uma vida livre, graças ao Rafael!</span>
-      </div>
-    </div>
-    <div class="comment">
-      <img src="https://randomuser.me/api/portraits/men/4.jpg" alt="avatar">
-      <div class="comment-info">
-        <span>Rui Sitoe</span>
-        <span>Este software mudou a minha vida completamente!</span>
-      </div>
-    </div>
-  </div>
+  <div class="log" id="log">إضغط على «إشارة جديدة» للحصول على خانة عشوائية</div>
 
   <script>
-    let signalGiven = false;
+    const gridEl = document.getElementById('grid');
+    const logEl = document.getElementById('log');
+    const cells = [];
 
-    function getSignal() {
-      const display = document.getElementById('signal-display');
-      const idSection = document.getElementById('id-input-section');
-
-      if (!signalGiven) {
-        const multiplier = (Math.random() * (3 - 1) + 1).toFixed(2);
-        display.textContent = `🚀 Novo sinal disponível: ×${multiplier} | Usa o código promocional: MNY111`;
-        idSection.style.display = 'block';
-        signalGiven = true;
-      } else {
-        alert('⚠️ Para obter sinais completos, registe-se na 1xBet com o código promocional MNY111!');
-      }
+    // إنشاء شبكة 5 × 10 (50 خلية)
+    for(let i=0;i<50;i++){
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      gridEl.appendChild(cell);
+      cells.push(cell);
     }
 
-    function handleIdSubmit() {
-      const id = document.getElementById('user-id').value;
-      const warning = document.getElementById('balance-warning');
-      const depositBtn = document.getElementById('deposit-btn');
-
-      if (id.trim().length === 10) {
-        warning.textContent = '📉 O saldo da sua conta 1xBet está abaixo de 100 MZN. Por favor, faça um depósito!';
-        depositBtn.style.display = 'inline-block';
-      } else {
-        warning.textContent = '⚠️ O ID deve conter exatamente 10 dígitos.';
-      }
+    function newSignal(){
+      cells.forEach(c=>c.classList.remove('highlight'));
+      const index = Math.floor(Math.random()*cells.length);
+      cells[index].classList.add('highlight');
+      const row = Math.floor(index/5)+1;
+      const col = (index%5)+1;
+      logEl.textContent = `الخانة المختارة: صف ${row}, عمود ${col}`;
     }
+
+    document.getElementById('next').addEventListener('click', newSignal);
   </script>
 </body>
 </html>
+
