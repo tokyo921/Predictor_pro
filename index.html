@@ -3,28 +3,57 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>شبكة إشارات عشوائية</title>
+  <title>🍏 متنبئ التفاح</title>
   <style>
     :root { font-family: "Noto Naskh Arabic", Tahoma, Arial, sans-serif; }
     body { margin:0; padding:20px; background:#0b1220; color:#e6eef8; }
     h1 { text-align:center; margin-bottom:20px; }
+    .hidden { display:none; }
     .grid { display:grid; grid-template-columns: repeat(5,60px); grid-gap:6px; justify-content:center; }
     .cell { width:60px; height:60px; display:flex; align-items:center; justify-content:center; background:#1e293b; border-radius:6px; font-size:22px; cursor:pointer; }
     .highlight { background:#22c55e !important; color:#fff; font-weight:bold; }
     .controls { margin-top:20px; text-align:center; }
     button { padding:10px 16px; border-radius:8px; border:0; background:#2563eb; color:#fff; cursor:pointer; font-weight:600; }
     .log { margin-top:20px; background:#1e293b; padding:10px; border-radius:8px; max-width:340px; margin-left:auto; margin-right:auto; text-align:center; }
+    .id-box { max-width:300px; margin:40px auto; text-align:center; }
+    input { padding:10px; border-radius:6px; border:1px solid #334155; background:#1e293b; color:#e6eef8; width:100%; text-align:center; font-size:18px; }
   </style>
 </head>
 <body>
-  <h1>إشارات تجريبية عشوائية</h1>
-  <div class="grid" id="grid"></div>
-  <div class="controls">
-    <button id="next">إشارة جديدة</button>
+  <h1>🍏 متنبئ التفاح</h1>
+
+  <div class="id-box" id="idBox">
+    <p>الرجاء إدخال <strong>MELBET ID</strong>:</p>
+    <input type="text" id="melbetId" maxlength="10" placeholder="XXXXXXXXXX" />
+    <button id="checkId">تأكيد</button>
+    <p id="idError" style="color:#ef4444; display:none;">المعرف غير صالح!</p>
   </div>
-  <div class="log" id="log">إضغط على «إشارة جديدة» للحصول على خانة عشوائية</div>
+
+  <div id="mainApp" class="hidden">
+    <div class="grid" id="grid"></div>
+    <div class="controls">
+      <button id="next">إشارة جديدة</button>
+    </div>
+    <div class="log" id="log">إضغط على «إشارة جديدة» للحصول على خانة عشوائية</div>
+  </div>
 
   <script>
+    const idBox = document.getElementById('idBox');
+    const mainApp = document.getElementById('mainApp');
+    const checkIdBtn = document.getElementById('checkId');
+    const melbetIdInput = document.getElementById('melbetId');
+    const idError = document.getElementById('idError');
+
+    checkIdBtn.addEventListener('click', ()=>{
+      const val = melbetIdInput.value.trim();
+      if(/^[0-9]{10}$/.test(val)){
+        idBox.classList.add('hidden');
+        mainApp.classList.remove('hidden');
+      } else {
+        idError.style.display = 'block';
+      }
+    });
+
     const gridEl = document.getElementById('grid');
     const logEl = document.getElementById('log');
     const cells = [];
