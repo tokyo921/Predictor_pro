@@ -2,13 +2,13 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Penalty Signal</title>
+  <title>Penalty Game</title>
   <style>
     body {
       display: flex;
-      justify-content: center;
-      align-items: center;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
       height: 100vh;
       background: #0d0d1a;
       color: white;
@@ -24,9 +24,6 @@
       cursor: pointer;
       margin-bottom: 20px;
     }
-    button:hover {
-      background: #ff1c00;
-    }
     .goal {
       position: relative;
       width: 400px;
@@ -34,15 +31,39 @@
       border: 5px solid #fff;
       border-radius: 8px;
       background: #2e2e2e;
+      overflow: hidden;
     }
     .ball {
       position: absolute;
+      bottom: 0;
+      left: 50%;
       width: 30px;
       height: 30px;
       background: white;
       border-radius: 50%;
-      display: none;
       box-shadow: 0 0 10px #fff;
+      transform: translateX(-50%);
+      display: none;
+    }
+    .goalkeeper {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 60px;
+      height: 100px;
+      background: #00bfff;
+      border-radius: 10px;
+      transform: translateX(-50%);
+    }
+    /* Анимация мяча */
+    @keyframes shoot {
+      0% { bottom: 0; left: 50%; }
+      100% { bottom: 180px; left: var(--target-x); }
+    }
+    /* Анимация вратаря */
+    @keyframes dive {
+      0% { transform: translateX(-50%) translateY(0); }
+      100% { transform: translateX(var(--dive-x)) translateY(-50px); }
     }
   </style>
 </head>
@@ -50,25 +71,38 @@
 
   <button onclick="shoot()">Получить сигнал</button>
   <div class="goal" id="goal">
+    <div class="goalkeeper" id="keeper"></div>
     <div class="ball" id="ball"></div>
   </div>
 
   <script>
     function shoot() {
-      const goal = document.getElementById("goal");
       const ball = document.getElementById("ball");
+      const keeper = document.getElementById("keeper");
 
-      // размеры ворот
-      const goalWidth = goal.clientWidth - 30; // минус диаметр мяча
-      const goalHeight = goal.clientHeight - 30;
-
-      // случайная позиция удара
-      const x = Math.floor(Math.random() * goalWidth);
-      const y = Math.floor(Math.random() * goalHeight);
-
-      ball.style.left = x + "px";
-      ball.style.top = y + "px";
+      // Показываем мяч
       ball.style.display = "block";
+
+      // Случайная цель удара
+      const targets = ["20%", "50%", "80%"];
+      const targetX = targets[Math.floor(Math.random() * targets.length)];
+
+      // Задаём CSS переменные
+      ball.style.setProperty("--target-x", targetX);
+
+      // Запускаем анимацию мяча
+      ball.style.animation = "none";
+      ball.offsetHeight; // перезапуск анимации
+      ball.style.animation = "shoot 1s forwards";
+
+      // Вратарь прыгает в сторону, но мяч всегда залетает
+      const diveDirections = ["-150px", "150px"];
+      const diveX = diveDirections[Math.floor(Math.random() * diveDirections.length)];
+      keeper.style.setProperty("--dive-x", diveX);
+
+      keeper.style.animation = "none";
+      keeper.offsetHeight;
+      keeper.style.animation = "dive 1s forwards";
     }
   </script>
 
