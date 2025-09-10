@@ -1,106 +1,131 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PredictorPro Penalty</title>
 <style>
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #222;
-    color: white;
-    text-align: center;
-}
-.container {
-    background: #1a1a1a;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px #000;
-}
-h1 {
-    margin-bottom: 20px;
-}
-.goal {
-    display: grid;
-    grid-template-columns: repeat(5, 60px);
-    grid-template-rows: repeat(3, 60px);
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-.cell {
-    width: 60px;
-    height: 60px;
-    background-color: #333;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.cell.active {
-    background-color: #ffeb3b;
-}
-.cell span {
-    font-size: 30px;
-}
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #28a745;
-    color: white;
-}
-button:hover {
-    background-color: #218838;
-}
+    body {
+        background-color: #000;
+        font-family: Arial, sans-serif;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .logo {
+        width: 150px;
+        height: 150px;
+        background-color: #fff;
+        border-radius: 50%;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .multiplier-bar {
+        display: flex;
+        justify-content: space-between;
+        width: 300px;
+        margin-bottom: 20px;
+    }
+
+    .multiplier-bar div {
+        width: 10px;
+        height: 10px;
+        background-color: #555;
+        border-radius: 50%;
+    }
+
+    .goal {
+        width: 350px;
+        height: 200px;
+        border: 2px solid #00ff00;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 5px;
+        padding: 10px;
+        background-color: #111;
+    }
+
+    .ball {
+        width: 50px;
+        height: 50px;
+        background-image: url('https://upload.wikimedia.org/wikipedia/commons/d/d3/Soccerball.svg');
+        background-size: cover;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .ball.highlight {
+        transform: scale(1.2);
+        border: 2px solid yellow;
+        border-radius: 50%;
+    }
+
+    .button-container {
+        margin-top: 20px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+        background-color: #00ff00;
+        color: #000;
+        border: none;
+        border-radius: 5px;
+    }
 </style>
 </head>
 <body>
-<div class="container">
-    <h1>PredictorPro Penalty</h1>
-    <div class="goal" id="goal">
-        <!-- 15 ячеек -->
-        <div class="cell" data-id="1"><span>⚽</span></div>
-        <div class="cell" data-id="2"><span>⚽</span></div>
-        <div class="cell" data-id="3"><span>⚽</span></div>
-        <div class="cell" data-id="4"><span>⚽</span></div>
-        <div class="cell" data-id="5"><span>⚽</span></div>
 
-        <div class="cell" data-id="6"><span>⚽</span></div>
-        <div class="cell" data-id="7"><span>⚽</span></div>
-        <div class="cell" data-id="8"><span>⚽</span></div>
-        <div class="cell" data-id="9"><span>⚽</span></div>
-        <div class="cell" data-id="10"><span>⚽</span></div>
+<div class="logo">PredictorPro</div>
 
-        <div class="cell" data-id="11"><span>⚽</span></div>
-        <div class="cell" data-id="12"><span>⚽</span></div>
-        <div class="cell" data-id="13"><span>⚽</span></div>
-        <div class="cell" data-id="14"><span>⚽</span></div>
-        <div class="cell" data-id="15"><span>⚽</span></div>
-    </div>
-    <button id="get-signal">Получить сигнал</button>
+<div class="multiplier-bar">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+
+<div class="goal" id="goal">
+    <!-- Сюда будут вставлены мячи через JS -->
+</div>
+
+<div class="button-container">
+    <button onclick="highlightTarget()">Показать куда бить</button>
 </div>
 
 <script>
-const button = document.getElementById('get-signal');
-const cells = document.querySelectorAll('.cell');
-let currentActive = null;
+    const goal = document.getElementById('goal');
 
-button.addEventListener('click', () => {
-    if(currentActive) {
-        currentActive.classList.remove('active');
+    // Создаем мячи
+    for (let i = 0; i < 15; i++) {
+        const ball = document.createElement('div');
+        ball.classList.add('ball');
+        goal.appendChild(ball);
     }
-    const randomIndex = Math.floor(Math.random() * cells.length);
-    currentActive = cells[randomIndex];
-    currentActive.classList.add('active');
-});
+
+    // Функция для подсветки случайного мяча
+    function highlightTarget() {
+        const balls = document.querySelectorAll('.ball');
+        balls.forEach(ball => ball.classList.remove('highlight'));
+
+        const randomIndex = Math.floor(Math.random() * balls.length);
+        balls[randomIndex].classList.add('highlight');
+    }
 </script>
+
 </body>
 </html>
