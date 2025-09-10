@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Penalty Signals</title>
+<title>Penalty Signal</title>
 <style>
     body {
         background: #0d0d1a;
@@ -14,43 +14,30 @@
         justify-content: center;
         height: 100vh;
     }
-    .field {
-        position: relative;
-        width: 400px;
-        height: 250px;
-        background: #2e7d32;
-        border: 5px solid white;
-        border-radius: 8px;
-        overflow: hidden;
-    }
     .goal {
-        position: absolute;
-        top: 20px;
-        left: 100px;
-        width: 200px;
-        height: 100px;
-        border: 5px solid white;
-        background: rgba(255,255,255,0.1);
+        position: relative;
+        width: 300px;
+        height: 200px;
+        border: 8px solid white;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.05);
+        display: flex;
+        flex-wrap: wrap;
     }
-    .goalkeeper {
-        position: absolute;
-        bottom: 50px;
-        left: 180px;
-        width: 40px;
-        height: 60px;
-        background: blue;
-        border-radius: 8px;
-        transition: all 0.6s ease;
+    .cell {
+        width: 20%;
+        height: 20%;
+        border: 1px solid rgba(255,255,255,0.1);
+        box-sizing: border-box;
     }
     .ball {
         position: absolute;
-        bottom: 10px;
-        left: 190px;
-        width: 20px;
-        height: 20px;
-        background: white;
+        width: 25px;
+        height: 25px;
         border-radius: 50%;
-        transition: all 1s ease;
+        background: red;
+        display: none;
+        transform: translate(-50%, -50%);
     }
     button {
         margin-top: 20px;
@@ -65,46 +52,32 @@
 </style>
 </head>
 <body>
-    <div class="field">
-        <div class="goal"></div>
-        <div class="goalkeeper" id="goalkeeper"></div>
+    <h2>⚽ Получить сигнал</h2>
+    <div class="goal" id="goal">
         <div class="ball" id="ball"></div>
     </div>
-    <button onclick="shoot()">Получить сигнал</button>
+    <button onclick="shoot()">Показать сигнал</button>
 
 <script>
 function shoot() {
+    const goal = document.getElementById("goal");
     const ball = document.getElementById("ball");
-    const keeper = document.getElementById("goalkeeper");
 
-    // Сбрасываем позиции
-    ball.style.left = "190px";
-    ball.style.bottom = "10px";
-    keeper.style.left = "180px";
-    
-    // Анимация вратаря (он прыгает, но мяч всё равно влетает)
-    setTimeout(() => {
-        let jumpSide = Math.random() > 0.5 ? -80 : 80;
-        keeper.style.left = (180 + jumpSide) + "px";
-    }, 200);
+    // размеры ворот
+    let goalWidth = goal.clientWidth;
+    let goalHeight = goal.clientHeight;
 
-    // Анимация мяча (летит в ворота, всегда гол)
-    setTimeout(() => {
-        let targetX = 120 + Math.random() * 140; // случайная точка в воротах
-        let targetY = 100 + Math.random() * 20;
-        ball.style.left = targetX + "px";
-        ball.style.bottom = targetY + "px";
-    }, 100);
+    // случайная позиция мяча внутри ворот
+    let x = Math.random() * goalWidth;
+    let y = Math.random() * goalHeight;
 
-    // Возврат мяча обратно
-    setTimeout(() => {
-        ball.style.left = "190px";
-        ball.style.bottom = "10px";
-        keeper.style.left = "180px";
-    }, 2000);
+    ball.style.left = x + "px";
+    ball.style.top = y + "px";
+    ball.style.display = "block";
 }
 </script>
 </body>
 </html>
+
 
 
