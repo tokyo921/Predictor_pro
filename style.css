@@ -5,7 +5,6 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    /* Новый фон */
     background: url('https://i.ibb.co/k2D8s27/background.png') no-repeat center center fixed;
     background-size: cover;
     color: white;
@@ -30,18 +29,18 @@ body {
 }
 
 .logo-container {
-    display: flex; /* Для размещения логотипа и текста рядом */
+    display: flex;
     align-items: center;
-    background-color: transparent; /* Убрал фон */
+    background-color: transparent;
     padding: 0;
-    box-shadow: none; /* Убрал тень */
+    box-shadow: none;
 }
 
 .logo {
-    width: 60px; /* Уменьшил размер логотипа (аватарки) */
+    width: 60px;
     height: 60px;
     border-radius: 50%;
-    object-fit: cover; /* Чтобы аватарка выглядела хорошо */
+    object-fit: cover;
     margin-right: 10px;
 }
 
@@ -49,7 +48,7 @@ body {
     font-size: 1.5em;
     font-weight: bold;
     color: #fff;
-    margin: 0; /* Убрал лишние отступы */
+    margin: 0;
 }
 
 .sound-control img {
@@ -98,7 +97,7 @@ body {
     width: 100%;
     aspect-ratio: 1.2 / 1;
     background-color: transparent;
-    border: 5px solid #bdc3c7;
+    border: 5-px solid #bdc3c7;
     border-top: none;
     margin: 20px 0;
 }
