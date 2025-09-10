@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>Penalty Signal</title>
+<title>إشارة البينالتي</title>
 <style>
     body {
         background: #0d0d1a;
@@ -13,6 +13,32 @@
         align-items: center;
         justify-content: center;
         height: 100vh;
+        direction: rtl;
+        text-align: center;
+    }
+    #loginScreen, #gameScreen {
+        background: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 10px;
+    }
+    input {
+        padding: 10px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        width: 200px;
+        margin-bottom: 15px;
+    }
+    button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background: #ff4b2b;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
     }
     .goal {
         position: relative;
@@ -21,14 +47,7 @@
         border: 8px solid white;
         border-radius: 5px;
         background: rgba(255, 255, 255, 0.05);
-        display: flex;
-        flex-wrap: wrap;
-    }
-    .cell {
-        width: 20%;
-        height: 20%;
-        border: 1px solid rgba(255,255,255,0.1);
-        box-sizing: border-box;
+        margin-top: 20px;
     }
     .ball {
         position: absolute;
@@ -39,26 +58,44 @@
         display: none;
         transform: translate(-50%, -50%);
     }
-    button {
-        margin-top: 20px;
-        padding: 10px 20px;
-        background: #ff4b2b;
-        border: none;
-        border-radius: 5px;
-        color: white;
-        font-size: 1rem;
-        cursor: pointer;
-    }
 </style>
 </head>
 <body>
-    <h2>⚽ Получить сигнал</h2>
+
+<!-- شاشة الدخول -->
+<div id="loginScreen">
+    <h2>✍️ دخّل رقم ID متاعك متاع Melbet</h2>
+    <input type="number" id="melbetId" maxlength="10" oninput="limitDigits(this)" placeholder="10 أرقام">
+    <br>
+    <button onclick="enterGame()">دخول</button>
+</div>
+
+<!-- شاشة اللعبة -->
+<div id="gameScreen" style="display:none;">
+    <h2>⚽ إشارة البينالتي</h2>
     <div class="goal" id="goal">
         <div class="ball" id="ball"></div>
     </div>
-    <button onclick="shoot()">Показать сигнал</button>
+    <button onclick="shoot()">إعطيني الإشارة</button>
+</div>
 
 <script>
+function limitDigits(input) {
+    if (input.value.length > 10) {
+        input.value = input.value.slice(0, 10);
+    }
+}
+
+function enterGame() {
+    let id = document.getElementById("melbetId").value;
+    if (id.length === 10) {
+        document.getElementById("loginScreen").style.display = "none";
+        document.getElementById("gameScreen").style.display = "block";
+    } else {
+        alert("📌 ال-ID لازم يكون فيه 10 أرقام بالضبط!");
+    }
+}
+
 function shoot() {
     const goal = document.getElementById("goal");
     const ball = document.getElementById("ball");
@@ -67,7 +104,7 @@ function shoot() {
     let goalWidth = goal.clientWidth;
     let goalHeight = goal.clientHeight;
 
-    // случайная позиция мяча внутри ворот
+    // случайная позиция мяча
     let x = Math.random() * goalWidth;
     let y = Math.random() * goalHeight;
 
@@ -76,8 +113,10 @@ function shoot() {
     ball.style.display = "block";
 }
 </script>
+
 </body>
 </html>
+
 
 
 
