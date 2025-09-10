@@ -1,206 +1,147 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пенальти (Улучшенная версия)</title>
-    <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #5d4037; /* Темно-коричневый фон, имитирующий поле */
-            color: white;
-            text-align: center;
-        }
-
-        .game-container {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
-        }
-
-        h1 {
-            font-size: 2.8em;
-            margin-bottom: 10px;
-            color: #ffc107;
-        }
-
-        .score-container {
-            margin-bottom: 20px;
-        }
-
-        .message {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #ffd700;
-        }
-
-        .field {
-            position: relative;
-            width: 600px;
-            height: 300px;
-            background: #7cb342; /* Светло-зеленый цвет поля */
-            border-bottom: 20px solid #8d6e63;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        .goal {
-            position: relative;
-            width: 500px;
-            height: 250px;
-            background-color: transparent;
-            border: 5px solid white;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-            overflow: hidden;
-        }
-
-        .goalkeeper {
-            position: absolute;
-            width: 60px;
-            height: 100px;
-            background: linear-gradient(to bottom, #f44336, #d32f2f); /* Красный градиент */
-            border-radius: 50% 50% 0 0; /* Округленные плечи */
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            transition: left 0.4s ease-in-out;
-            z-index: 10;
-        }
-
-        .ball {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background: radial-gradient(circle, white 40%, black 60%);
-            border-radius: 50%;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            transition: all 0.5s ease-out;
-            z-index: 5;
-        }
-
-        .buttons-container button {
-            padding: 15px 30px;
-            font-size: 1.2em;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #00796b;
-            color: white;
-            margin: 0 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        .buttons-container button:hover {
-            background-color: #004d40;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Пенальти 1xBet Style</title>
+<style>
+body {
+    margin:0;
+    padding:0;
+    font-family: Arial, sans-serif;
+    background: #4CAF50;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    color:white;
+}
+.game-container {
+    width:600px;
+    text-align:center;
+    background: rgba(0,0,0,0.5);
+    padding:30px;
+    border-radius:15px;
+}
+h1 { margin-bottom:10px; color:#ffc107;}
+.score-container { margin-bottom:20px;}
+.message { font-weight:bold; font-size:1.2em; margin-bottom:20px; color:#ffeb3b;}
+.field {
+    position:relative;
+    width:500px;
+    height:250px;
+    margin:0 auto 20px;
+    background:#e0e0e0;
+    border:5px solid #a0a0a0;
+    overflow:hidden;
+}
+.goalkeeper {
+    position:absolute;
+    width:60px;
+    height:100px;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    background:red;
+    border-radius:50% 50% 0 0;
+    transition:left 0.5s ease-in-out;
+    z-index:10;
+}
+.ball {
+    position:absolute;
+    width:30px;
+    height:30px;
+    bottom:10px;
+    left:50%;
+    transform:translateX(-50%);
+    background: radial-gradient(circle, white 40%, black 60%);
+    border-radius:50%;
+    z-index:5;
+    transition: all 0.7s ease-out;
+}
+.buttons-container button {
+    padding:10px 20px;
+    font-size:1.2em;
+    margin:0 10px;
+    border:none;
+    border-radius:5px;
+    background:#00796b;
+    color:white;
+    cursor:pointer;
+}
+.buttons-container button:hover { background:#004d40; }
+</style>
 </head>
 <body>
-    <div class="game-container">
-        <h1>Penalty Shootout</h1>
-        <div class="score-container">
-            <p>Счет: <span id="score">0</span></p>
-            <p id="message" class="message">Выбирай, куда бить!</p>
-        </div>
-        <div class="field">
-            <div class="goal">
-                <div class="goalkeeper"></div>
-                <div class="ball"></div>
-            </div>
-        </div>
-        <div class="buttons-container">
-            <button id="shoot-left" data-target="left">Влево</button>
-            <button id="shoot-center" data-target="center">По центру</button>
-            <button id="shoot-right" data-target="right">Вправо</button>
-        </div>
+<div class="game-container">
+    <h1>Пенальти 1xBet</h1>
+    <div class="score-container">
+        <p>Счет: <span id="score">0</span></p>
+        <p id="message" class="message">Выбирай направление удара</p>
     </div>
+    <div class="field">
+        <div class="goalkeeper"></div>
+        <div class="ball"></div>
+    </div>
+    <div class="buttons-container">
+        <button data-target="left">Влево</button>
+        <button data-target="center">По центру</button>
+        <button data-target="right">Вправо</button>
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.buttons-container button');
+    const message = document.getElementById('message');
+    const scoreEl = document.getElementById('score');
+    const keeper = document.querySelector('.goalkeeper');
+    const ball = document.querySelector('.ball');
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const shootButtons = document.querySelectorAll('.buttons-container button');
-            const messageElement = document.getElementById('message');
-            const scoreElement = document.getElementById('score');
-            const goalkeeper = document.querySelector('.goalkeeper');
-            const ball = document.querySelector('.ball');
+    let score = 0;
+    let gameActive = true;
 
-            let score = 0;
-            let gameActive = true;
-            
-            // Позиции вратаря и мяча в зависимости от выбора
-            const positions = {
-                'left': { keeper: '15%', ball: '15%' },
-                'center': '50%',
-                'right': { keeper: '85%', ball: '85%' }
-            };
+    const positions = {
+        'left': '15%',
+        'center': '50%',
+        'right': '85%'
+    };
 
-            function handleShoot(event) {
-                if (!gameActive) return;
-                gameActive = false;
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            if(!gameActive) return;
+            gameActive=false;
 
-                const playerChoice = event.target.getAttribute('data-target');
+            const playerChoice = btn.getAttribute('data-target');
+            const keeperChoices = ['left','center','right'];
+            const keeperMove = keeperChoices[Math.floor(Math.random()*3)];
 
-                // Вратарь прыгает в случайную сторону
-                const keeperChoices = ['left', 'center', 'right'];
-                const keeperMove = keeperChoices[Math.floor(Math.random() * keeperChoices.length)];
+            // анимация вратаря
+            keeper.style.left = positions[keeperMove];
 
-                // Анимация вратаря
-                if (keeperMove === 'center') {
-                    goalkeeper.style.left = positions.center;
+            // анимация мяча
+            ball.style.left = positions[playerChoice];
+            ball.style.bottom = '200px';
+
+            setTimeout(() => {
+                if(playerChoice!==keeperMove){
+                    score++;
+                    message.textContent='ГОЛ! 🎉';
                 } else {
-                    goalkeeper.style.left = positions[keeperMove].keeper;
+                    message.textContent='Вратарь поймал! 🧤';
                 }
-
-                // Анимация мяча
-                if (playerChoice === 'center') {
-                    ball.style.left = positions.center;
-                } else {
-                    ball.style.left = positions[playerChoice].ball;
-                }
-                ball.style.top = '10%';
-                
-                setTimeout(() => {
-                    if (playerChoice !== keeperMove) {
-                        // Гол!
-                        score++;
-                        messageElement.textContent = 'ГОЛ! 🎉';
-                    } else {
-                        // Вратарь поймал
-                        messageElement.textContent = 'Вратарь поймал! 🧤';
-                    }
-
-                    scoreElement.textContent = score;
-
-                    // Сброс игры через 2 секунды
-                    setTimeout(resetGame, 2000);
-                }, 500);
-            }
-
-            function resetGame() {
-                gameActive = true;
-                messageElement.textContent = 'Выбирай, куда бить!';
-                
-                // Сброс позиции мяча и вратаря
-                ball.style.top = 'auto';
-                ball.style.bottom = '10px';
-                ball.style.left = '50%';
-                goalkeeper.style.left = '50%';
-            }
-
-            shootButtons.forEach(button => {
-                button.addEventListener('click', handleShoot);
-            });
+                scoreEl.textContent=score;
+                setTimeout(()=>{
+                    ball.style.bottom='10px';
+                    ball.style.left='50%';
+                    keeper.style.left='50%';
+                    message.textContent='Выбирай направление удара';
+                    gameActive=true;
+                },1500);
+            },700);
         });
-    </script>
+    });
+});
+</script>
 </body>
 </html>
 
