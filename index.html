@@ -1,122 +1,67 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>إشارة البينالتي</title>
-<style>
-    body {
-        background: #0d0d1a;
-        color: white;
-        font-family: Arial, sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        direction: rtl;
-        text-align: center;
-    }
-    #loginScreen, #gameScreen {
-        background: rgba(0, 0, 0, 0.6);
-        padding: 20px;
-        border-radius: 10px;
-    }
-    input {
-        padding: 10px;
-        font-size: 1rem;
-        border: none;
-        border-radius: 5px;
-        text-align: center;
-        width: 200px;
-        margin-bottom: 15px;
-    }
-    button {
-        margin-top: 10px;
-        padding: 10px 20px;
-        background: #ff4b2b;
-        border: none;
-        border-radius: 5px;
-        color: white;
-        font-size: 1rem;
-        cursor: pointer;
-    }
-    .goal {
-        position: relative;
-        width: 300px;
-        height: 200px;
-        border: 8px solid white;
-        border-radius: 5px;
-        background: rgba(255, 255, 255, 0.05);
-        margin-top: 20px;
-    }
-    .ball {
-        position: absolute;
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        background: red;
-        display: none;
-        transform: translate(-50%, -50%);
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой первый проект на GitHub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+            color: #333;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
-
-<!-- شاشة الدخول -->
-<div id="loginScreen">
-    <h2>✍️ دخّل رقم ID متاعك متاع Melbet</h2>
-    <input type="number" id="melbetId" maxlength="10" oninput="limitDigits(this)" placeholder="10 أرقام">
-    <br>
-    <button onclick="enterGame()">دخول</button>
-</div>
-
-<!-- شاشة اللعبة -->
-<div id="gameScreen" style="display:none;">
-    <h2>⚽ إشارة البينالتي</h2>
-    <div class="goal" id="goal">
-        <div class="ball" id="ball"></div>
+    <div class="container">
+        <h1>Привет, GitHub! 👋</h1>
+        <p>Добро пожаловать в мой первый веб-проект, размещенный на GitHub.</p>
+        <button id="changeTextButton">Нажми на меня</button>
     </div>
-    <button onclick="shoot()">إعطيني الإشارة</button>
-</div>
 
-<script>
-function limitDigits(input) {
-    if (input.value.length > 10) {
-        input.value = input.value.slice(0, 10);
-    }
-}
-
-function enterGame() {
-    let id = document.getElementById("melbetId").value;
-    if (id.length === 10) {
-        document.getElementById("loginScreen").style.display = "none";
-        document.getElementById("gameScreen").style.display = "block";
-    } else {
-        alert("📌 ال-ID لازم يكون فيه 10 أرقام بالضبط!");
-    }
-}
-
-function shoot() {
-    const goal = document.getElementById("goal");
-    const ball = document.getElementById("ball");
-
-    // размеры ворот
-    let goalWidth = goal.clientWidth;
-    let goalHeight = goal.clientHeight;
-
-    // случайная позиция мяча
-    let x = Math.random() * goalWidth;
-    let y = Math.random() * goalHeight;
-
-    ball.style.left = x + "px";
-    ball.style.top = y + "px";
-    ball.style.display = "block";
-}
-</script>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const button = document.getElementById('changeTextButton');
+            const paragraph = document.querySelector('.container p');
+            
+            button.addEventListener('click', () => {
+                paragraph.textContent = 'Ты успешно нажал на кнопку! 🎉';
+            });
+        });
+    </script>
 </body>
 </html>
-
-
 
 
