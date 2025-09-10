@@ -1,82 +1,404 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>🍏 متنبئ التفاح</title>
-  <style>
-    :root { font-family: "Noto Naskh Arabic", Tahoma, Arial, sans-serif; }
-    body { margin:0; padding:20px; background:#0b1220; color:#e6eef8; }
-    h1 { text-align:center; margin-bottom:20px; }
-    .hidden { display:none; }
-    .grid { display:grid; grid-template-columns: repeat(5,60px); grid-gap:6px; justify-content:center; }
-    .cell { width:60px; height:60px; display:flex; align-items:center; justify-content:center; background:#1e293b; border-radius:6px; font-size:22px; cursor:pointer; }
-    .highlight { background:#22c55e !important; color:#fff; font-weight:bold; }
-    .controls { margin-top:20px; text-align:center; }
-    button { padding:10px 16px; border-radius:8px; border:0; background:#2563eb; color:#fff; cursor:pointer; font-weight:600; }
-    .log { margin-top:20px; background:#1e293b; padding:10px; border-radius:8px; max-width:340px; margin-left:auto; margin-right:auto; text-align:center; }
-    .id-box { max-width:300px; margin:40px auto; text-align:center; }
-    input { padding:10px; border-radius:6px; border:1px solid #334155; background:#1e293b; color:#e6eef8; width:100%; text-align:center; font-size:18px; }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Пенальти — сигнал куда бить</title>
+<style>
+  :root{
+    --bg:#0b1220;
+    --card:#0f1724;
+    --accent:#22c1c3;
+    --accent-2:#ffd166;
+    --muted:#9aa7b2;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:Inter, system-ui, Arial, sans-serif;
+    background: linear-gradient(180deg,var(--bg) 0%, #07101a 100%);
+    color: #e6eef6;
+    padding:20px;
+  }
+
+  .wrap{
+    width:100%;
+    max-width:980px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:14px;
+    padding:18px;
+    box-shadow:0 10px 30px rgba(3,10,18,0.6);
+    display:grid;
+    grid-template-columns: 1fr 360px;
+    gap:18px;
+    align-items:start;
+  }
+
+  /* left: goal */
+  .goal-area{
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+    border-radius:10px;
+    padding:14px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    align-items:center;
+  }
+
+  .goal-cage{
+    position:relative;
+    width:100%;
+    max-width:640px;
+    aspect-ratio: 16/9;
+    background: linear-gradient(180deg,#0f2b18 0%, #072014 100%);
+    border-radius:8px;
+    border: 4px solid rgba(255,255,255,0.04);
+    box-shadow: inset 0 6px 20px rgba(0,0,0,0.6);
+    overflow:hidden;
+    display:grid;
+    place-items:center;
+  }
+
+  /* stylized goal frame */
+  .goal-frame{
+    position:absolute;
+    inset:6% 8%;
+    border: 6px solid #dbeef0;
+    border-radius:6px;
+    opacity:0.12;
+    pointer-events:none;
+  }
+
+  /* the 5x5 target grid */
+  .target-grid{
+    width:88%;
+    height:76%;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    grid-template-rows:repeat(5,1fr);
+    gap:8px;
+    z-index:2;
+    padding:8px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+    border-radius:6px;
+  }
+
+  .cell{
+    position:relative;
+    border-radius:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    user-select:none;
+    transition: transform .15s ease, box-shadow .15s ease;
+    background: rgba(255,255,255,0.02);
+    box-shadow: inset 0 -4px 8px rgba(0,0,0,0.35);
+    font-size:14px;
+    color:var(--muted);
+  }
+
+  .cell:hover{ transform: translateY(-4px); box-shadow: 0 6px 18px rgba(0,0,0,0.6); }
+
+  .cell.signal{
+    background: linear-gradient(135deg, rgba(34,193,195,0.18), rgba(255,209,102,0.08));
+    color:#fff;
+    box-shadow: 0 8px 28px rgba(34,193,195,0.16), inset 0 -6px 12px rgba(0,0,0,0.5);
+    transform: scale(1.02);
+    animation: pulse 1.25s infinite;
+  }
+
+  @keyframes pulse{
+    0%{ box-shadow:0 6px 18px rgba(34,193,195,0.12), 0 0 0 0 rgba(34,193,195,0.08); }
+    70%{ box-shadow:0 14px 36px rgba(34,193,195,0.18), 0 0 0 18px rgba(34,193,195,0.02); }
+    100%{ box-shadow:0 6px 18px rgba(34,193,195,0.12), 0 0 0 0 rgba(34,193,195,0.00); }
+  }
+
+  /* right panel */
+  .panel{
+    padding:12px;
+    border-radius:8px;
+    background: rgba(255,255,255,0.02);
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    min-height:260px;
+  }
+
+  .title{
+    font-weight:600;
+    font-size:18px;
+  }
+
+  .info{
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.45;
+  }
+
+  .coord{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px;
+    border-radius:8px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  }
+
+  .coord .big{
+    font-size:20px;
+    font-weight:700;
+    color:var(--accent-2);
+  }
+
+  .buttons{ display:flex; gap:8px; flex-wrap:wrap; }
+
+  .btn{
+    padding:10px 12px;
+    border-radius:8px;
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.06);
+    color:inherit;
+    cursor:pointer;
+    transition: all .15s ease;
+    font-weight:600;
+  }
+  .btn.primary{
+    background: linear-gradient(90deg,var(--accent), #1fb6b1);
+    border: none;
+    color: #042022;
+    box-shadow: 0 8px 18px rgba(34,193,195,0.12);
+  }
+  .btn.ghost{
+    background:transparent;
+  }
+  .hint{ font-size:13px; color:var(--muted); }
+
+  /* responsive */
+  @media (max-width:900px){
+    .wrap{ grid-template-columns:1fr; padding:12px; }
+    .panel{ order:2 }
+    .goal-area{ order:1 }
+  }
+</style>
 </head>
 <body>
-  <h1>🍏 متنبئ التفاح</h1>
+  <div class="wrap" role="application" aria-label="Penalty Target App">
+    <div class="goal-area">
+      <div style="display:flex; width:100%; justify-content:space-between; align-items:center;">
+        <div class="title">Пенальти — куда бить?</div>
+        <div class="hint">5 × 5 — 25 возможных точек</div>
+      </div>
 
-  <div class="id-box" id="idBox">
-    <p>الرجاء إدخال <strong>MELBET ID</strong>:</p>
-    <input type="text" id="melbetId" maxlength="10" placeholder="XXXXXXXXXX" />
-    <button id="checkId">تأكيد</button>
-    <p id="idError" style="color:#ef4444; display:none;">المعرف غير صالح!</p>
-  </div>
+      <div class="goal-cage" id="goalCage" aria-hidden="false">
+        <div class="goal-frame" aria-hidden="true"></div>
+        <div class="target-grid" id="grid" role="grid" aria-label="Сетка ворот">
+          <!-- cells injected by JS -->
+        </div>
+      </div>
 
-  <div id="mainApp" class="hidden">
-    <div class="grid" id="grid"></div>
-    <div class="controls">
-      <button id="next">إشارة جديدة</button>
+      <div style="width:100%; display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
+        <button class="btn primary" id="newBtn" title="Сгенерировать новую цель">Показать куда бить</button>
+        <button class="btn" id="randomHint">Подсказка (вспышка)</button>
+        <button class="btn ghost" id="clearBtn">Очистить</button>
+      </div>
     </div>
-    <div class="log" id="log">إضغط على «إشارة جديدة» للحصول على خانة عشوائية</div>
+
+    <aside class="panel" aria-label="Панель управления">
+      <div class="title">Информация</div>
+      <div class="info">
+        Нажми «Показать куда бить», и приложение подсветит одну из 25 точек. Можно также кликнуть по любой ячейке, чтобы выбрать её вручную.
+      </div>
+
+      <div class="coord" aria-live="polite">
+        <div>Цель:</div>
+        <div class="big" id="coordText">—</div>
+      </div>
+
+      <div style="display:flex; gap:8px; align-items:center; justify-content:space-between;">
+        <div class="hint">Выбранная ячейка: <span id="cellIndex">—</span></div>
+        <div class="hint">Ряд × Столбец</div>
+      </div>
+
+      <div style="margin-top:6px;">
+        <div class="title" style="font-size:15px;">Настройки</div>
+        <div class="info" style="margin-top:6px;">
+          Анимация сигнала: <label style="margin-left:6px"><input type="checkbox" id="animToggle" checked> Вкл</label>
+        </div>
+      </div>
+
+      <div>
+        <div class="title" style="font-size:15px; margin-top:6px;">Действия</div>
+        <div class="buttons" style="margin-top:8px;">
+          <button class="btn primary" id="copyBtn">Скопировать цель</button>
+          <button class="btn" id="focusBtn">Выделить ближайшее</button>
+        </div>
+      </div>
+
+      <div style="margin-top:10px;">
+        <div class="hint">Подсказка: используй кнопку копирования, чтобы быстро отправить сигнал игроку.</div>
+      </div>
+    </aside>
   </div>
 
-  <script>
-    const idBox = document.getElementById('idBox');
-    const mainApp = document.getElementById('mainApp');
-    const checkIdBtn = document.getElementById('checkId');
-    const melbetIdInput = document.getElementById('melbetId');
-    const idError = document.getElementById('idError');
+<script>
+  const gridEl = document.getElementById('grid');
+  const coordText = document.getElementById('coordText');
+  const cellIndexText = document.getElementById('cellIndex');
+  const newBtn = document.getElementById('newBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const randomHintBtn = document.getElementById('randomHint');
+  const copyBtn = document.getElementById('copyBtn');
+  const focusBtn = document.getElementById('focusBtn');
+  const animToggle = document.getElementById('animToggle');
 
-    checkIdBtn.addEventListener('click', ()=>{
-      const val = melbetIdInput.value.trim();
-      if(/^[0-9]{10}$/.test(val)){
-        idBox.classList.add('hidden');
-        mainApp.classList.remove('hidden');
-      } else {
-        idError.style.display = 'block';
+  const ROWS = 5, COLS = 5;
+  let cells = [];
+  let current = null;
+
+  // create grid cells
+  function buildGrid(){
+    gridEl.innerHTML = '';
+    cells = [];
+    for(let r=1;r<=ROWS;r++){
+      for(let c=1;c<=COLS;c++){
+        const idx = (r-1)*COLS + c; // 1..25
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.setAttribute('role','button');
+        cell.setAttribute('aria-label', `Ячейка ${r} ряд ${c} столбец`);
+        cell.dataset.r = r;
+        cell.dataset.c = c;
+        cell.dataset.idx = idx;
+        cell.textContent = ''; // could show small dot/number
+        cell.addEventListener('click', () => selectCell(idx));
+        cells.push(cell);
+        gridEl.appendChild(cell);
       }
+    }
+  }
+
+  function selectCell(idx, options={user:true}){
+    // clear prev
+    if(current !== null){
+      cells[current-1].classList.remove('signal');
+      if(!animToggle.checked){ cells[current-1].style.animation = ''; }
+    }
+    current = idx;
+    const el = cells[idx-1];
+    el.classList.add('signal');
+    if(!animToggle.checked){ el.style.animation = 'none'; }
+    const r = el.dataset.r, c = el.dataset.c;
+    coordText.textContent = `Ряд ${r} × Столбец ${c}`;
+    cellIndexText.textContent = idx;
+    // small flash effect
+    if(options.user){
+      el.animate([{ transform:'scale(1.0)' }, { transform:'scale(1.06)' }, { transform:'scale(1.0)' }], {duration:260, easing:'ease-out'});
+    }
+  }
+
+  function clearSelection(){
+    if(current !== null){
+      cells[current-1].classList.remove('signal');
+      if(!animToggle.checked){ cells[current-1].style.animation = ''; }
+    }
+    current = null;
+    coordText.textContent = '—';
+    cellIndexText.textContent = '—';
+  }
+
+  function randomSelect(){
+    const idx = Math.floor(Math.random()* (ROWS*COLS) ) + 1;
+    selectCell(idx, {user:false});
+    // small "arrow" or emphasis: add temporary outline
+    const el = cells[idx-1];
+    el.animate([{ boxShadow: '0 8px 28px rgba(34,193,195,0.16)' }, { boxShadow:'0 2px 8px rgba(0,0,0,0.35)'}], {duration:900, iterations:1});
+    return idx;
+  }
+
+  // copy text to clipboard
+  function copyCurrent(){
+    if(!current){
+      alert('Сначала выберите цель.');
+      return;
+    }
+    const el = cells[current-1];
+    const r = el.dataset.r, c = el.dataset.c;
+    const text = `Бить в: Ряд ${r} × Столбец ${c} (ячейка ${current})`;
+    navigator.clipboard?.writeText(text).then(()=> {
+      alert('Цель скопирована в буфер обмена: ' + text);
+    }, ()=> {
+      alert('Не удалось скопировать. Вот текст: ' + text);
     });
+  }
 
-    const gridEl = document.getElementById('grid');
-    const logEl = document.getElementById('log');
-    const cells = [];
-
-    // إنشاء شبكة 5 × 10 (50 خلية)
-    for(let i=0;i<50;i++){
-      const cell = document.createElement('div');
-      cell.className = 'cell';
-      gridEl.appendChild(cell);
-      cells.push(cell);
+  // focusBtn: выделить соседнюю ячейку (пример: ближайшая вверх или вправо)
+  function focusNearest(){
+    if(!current){
+      alert('Сначала выберите цель.');
+      return;
     }
+    const el = cells[current-1];
+    let r = parseInt(el.dataset.r), c = parseInt(el.dataset.c);
+    // пример логики: смещаем в центр (3,3)
+    const centerR = Math.ceil(ROWS/2), centerC = Math.ceil(COLS/2);
+    if(r < centerR) r++;
+    else if(r > centerR) r--;
+    if(c < centerC) c++;
+    else if(c > centerC) c--;
+    const newIdx = (r-1)*COLS + c;
+    selectCell(newIdx, {user:true});
+  }
 
-    function newSignal(){
-      cells.forEach(c=>c.classList.remove('highlight'));
-      const index = Math.floor(Math.random()*cells.length);
-      cells[index].classList.add('highlight');
-      const row = Math.floor(index/5)+1;
-      const col = (index%5)+1;
-      logEl.textContent = `الخانة المختارة: صف ${row}, عمود ${col}`;
+  // show quick flash (подсказка)
+  function flashHint(){
+    const idx = randomSelect();
+    // убираем через 1.6s, но сохраняем выбор
+    setTimeout(()=> {
+      // дополнительная вибрация/подсказка сделаем лёгкую
+      if(window.navigator.vibrate) window.navigator.vibrate(80);
+    }, 100);
+  }
+
+  // init
+  buildGrid();
+
+  // handlers
+  newBtn.addEventListener('click', ()=> {
+    randomSelect();
+  });
+
+  clearBtn.addEventListener('click', ()=> clearSelection());
+  randomHintBtn.addEventListener('click', ()=> flashHint());
+  copyBtn.addEventListener('click', ()=> copyCurrent());
+  focusBtn.addEventListener('click', ()=> focusNearest());
+
+  // keyboard: space -> random
+  window.addEventListener('keydown', (e)=>{
+    if(e.code === 'Space'){
+      e.preventDefault();
+      randomSelect();
+    } else if(e.key === 'c' || e.key === 'C'){
+      copyCurrent();
     }
+  });
 
-    document.getElementById('next').addEventListener('click', newSignal);
-  </script>
+  // accessibility: announce selection
+  const observer = new MutationObserver(()=> {
+    // announce
+    // (coordText is aria-live)
+  });
+  observer.observe(coordText, {childList:true, subtree:true});
+
+  // optional: pre-select center
+  // selectCell(13, {user:false}); // center of 5x5
+</script>
 </body>
 </html>
+
 
