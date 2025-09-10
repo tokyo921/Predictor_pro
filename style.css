@@ -5,7 +5,7 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background: url('https://i.ibb.co/k2D8s27/background.png') no-repeat center center fixed;
+    background: url('background.png') no-repeat center center fixed; /* Использование вашего файла background.png */
     background-size: cover;
     color: white;
     text-align: center;
@@ -97,7 +97,7 @@ body {
     width: 100%;
     aspect-ratio: 1.2 / 1;
     background-color: transparent;
-    border: 5-px solid #bdc3c7;
+    border: 5px solid #bdc3c7;
     border-top: none;
     margin: 20px 0;
 }
@@ -136,7 +136,7 @@ body {
     content: '';
     width: 40px;
     height: 40px;
-    background: url('https://i.ibb.co/d622R51/ball.png') no-repeat center center / contain;
+    background: url('ball.png') no-repeat center center / contain; /* Использование вашего файла ball.png */
     transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
 }
 
