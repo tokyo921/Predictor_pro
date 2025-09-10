@@ -3,62 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой первый проект на GitHub</title>
+    <title>Пенальти</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f2f5;
-            color: #333;
+            background-color: #4CAF50; /* Цвет газона */
+            color: white;
             text-align: center;
         }
 
-        .container {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .game-container {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
 
         h1 {
-            color: #2c3e50;
+            font-size: 3em;
+            margin-bottom: 10px;
         }
 
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
+        .score-container {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #ffeb3b;
+        }
+
+        .goal-area {
+            position: relative;
+            width: 500px;
+            height: 250px;
+            background: #e0e0e0;
+            border: 5px solid #a0a0a0;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .keeper {
+            position: absolute;
+            width: 60px;
+            height: 100px;
+            background-color: #2196f3;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: left 0.5s ease-in-out;
+            z-index: 10;
+        }
+
+        .ball {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, white 40%, black 60%);
+            border-radius: 50%;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: transform 0.5s ease-in-out;
+            z-index: 5;
+        }
+
+        .hit-area {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            cursor: pointer;
+            opacity: 0; /* Делаем области невидимыми */
+        }
+
+        #left { left: 0; width: 33.3%; }
+        #center { left: 33.3%; width: 33.3%; }
+        #right { left: 66.6%; width: 33.3%; }
+
+        .goalkeeper-move {
+            transition: left 0.5s ease-in-out;
+        }
+
+        #shoot-button {
+            padding: 15px 30px;
+            font-size: 1.5em;
             cursor: pointer;
             border: none;
             border-radius: 5px;
-            background-color: #3498db;
+            background-color: #FF5722;
             color: white;
             transition: background-color 0.3s ease;
         }
 
-        button:hover {
-            background-color: #2980b9;
+        #shoot-button:hover {
+            background-color: #E64A19;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Привет, GitHub! 👋</h1>
-        <p>Добро пожаловать в мой первый веб-проект, размещенный на GitHub.</p>
-        <button id="changeTextButton">Нажми на меня</button>
+    <div class="game-container">
+        <h1>Пенальти</h1>
+        <div class="score-container">
+            <p>Счёт: <span id="score">0</span></p>
+            <p id="message" class="message">Нажмите "Удар!", чтобы начать.</p>
+        </div>
+        <div class="goal-area">
+            <div class="keeper"></div>
+            <div class="ball"></div>
+            <div class="hit-area" id="left" data-position="left"></div>
+            <div class="hit-area" id="center" data-position="center"></div>
+            <div class="hit-area" id="right" data-position="right"></div>
+        </div>
+        <button id="shoot-button">Удар!</button>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const button = document.getElementById('changeTextButton');
-            const paragraph = document.querySelector('.container p');
-            
-            button.addEventListener('click', () => {
-                paragraph.textContent = 'Ты успешно нажал на кнопку! 🎉';
-            });
+            const shootButton = document.getElementById('shoot-button');
+            const messageElement = document.getElementById('message');
+            const scoreElement = document.getElementById('score');
+            const hitAreas = document.querySelectorAll('.hit-area');
+            const keeper = document.querySelector('.keeper');
+
+            let score = 0;
+            let gameActive = false;
+
+            // Позиции вратаря
+            const keeperPositions = {
+                'left': '20%',
+                'center': '50%',
+                'right': '80%'
+            };
+
+            function startGame() {
+                if (gameActive) return;
+                gameActive = true;
+                messageElement.textContent = 'Выбирай, куда бить!';
+                shootButton.style.display = 'none';
+
+                // Случайная позиция вратаря
+                const positions = ['left', 'center', 'right'];
+                const keeperMove = positions[Math.floor(Math.random() * positions.length)];
+                keeper.style.left = keeperPositions[keeperMove];
+
+                // Включаем обработчики клика по областям
+                hitAreas.forEach(area => {
+                    area.style.cursor = 'pointer';
+                    area.addEventListener('click', handleShoot);
+                });
+            }
+
+            function handleShoot(event) {
+                if (!gameActive) return;
+
+                const shotPosition = event.target.getAttribute('data-position');
+                const keeperPosition = Object.keys(keeperPositions).find(key => keeperPositions[key] === keeper.style.left);
+
+                if (shotPosition !== keeperPosition) {
+                    score++;
+                    messageElement.textContent = 'ГОЛ! 🎉';
+                } else {
+                    messageElement.textContent = 'Вратарь поймал! 🧤';
+                }
+
+                scoreElement.textContent = score;
+                endGame();
+            }
+
+            function endGame() {
+                gameActive = false;
+                shootButton.style.display = 'block';
+
+                // Отключаем клики
+                hitAreas.forEach(area => {
+                    area.style.cursor = 'default';
+                    area.removeEventListener('click', handleShoot);
+                });
+            }
+
+            shootButton.addEventListener('click', startGame);
         });
     </script>
 </body>
