@@ -137,7 +137,7 @@ body {
     content: '';
     width: 40px;
     height: 40px;
-    background: url('https://i.ibb.co/d622R51/ball.png') no-repeat center center / contain; /* Новое изображение мяча */
+    background: url('https://i.ibb.co/d622R51/ball.png') no-repeat center center / contain;
     transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
 }
 
