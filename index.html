@@ -1,73 +1,78 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PredictorPro</title>
+  <title>PredictorPro - ركلات الترجيح</title>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background-color: #000;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 3em;
-      margin-bottom: 20px;
-      color: #00ffcc;
-      text-transform: uppercase;
-    }
-
-    p {
-      font-size: 1.2em;
-      margin-bottom: 30px;
-      color: #ccc;
-      max-width: 600px;
-    }
-
-    button {
-      padding: 15px 40px;
-      font-size: 1.2em;
-      background: linear-gradient(90deg, #00ffcc, #0066ff);
-      border: none;
-      border-radius: 30px;
-      color: #fff;
-      cursor: pointer;
-      transition: transform 0.2s, opacity 0.3s;
-    }
-
-    button:hover {
-      transform: scale(1.05);
-      opacity: 0.9;
-    }
-
-    footer {
-      position: absolute;
-      bottom: 20px;
-      font-size: 0.9em;
-      color: #666;
-    }
+    body { margin:0; padding:0; font-family: Arial, sans-serif; background:#000; color:#fff; text-align:center; }
+    .container { padding: 20px; max-width:600px; margin:0 auto; }
+    input, button { font-size:1rem; padding:10px; margin:10px 0; border-radius:5px; border:none; }
+    input { width:200px; text-align:center; }
+    .hidden { display:none; }
+    .progress { display:flex; justify-content:space-between; margin:20px 0; }
+    .step { width:50px; height:50px; background:#444; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#888; }
+    .step.active { background:#0f0; color:#000; }
+    .grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; justify-items:center; margin:20px 0; }
+    .cell { width:40px; height:40px; background:#333; border-radius:50%; display:flex; align-items:center; justify-content:center; opacity:0.5; }
+    .cell.active { background:#ff0; opacity:1; }
+    .faq { text-align:left; margin:20px 0; color:#ccc; }
+    .faq h3 { margin-bottom:10px; }
+    .faq p { margin-bottom:8px; }
   </style>
 </head>
 <body>
-  <h1>PredictorPro</h1>
-  <p>Эксклюзивный софт для точных сигналов ⚡<br>
-     Начни зарабатывать прямо сейчас вместе с нами 🚀</p>
-  <button onclick="startPredictor()">Запустить предиктор</button>
+  <div class="container" id="login">
+    <h1>PredictorPro</h1>
+    <p>أدخل ID Melbet (10 أرقام)</p>
+    <input id="idInput" type="text" placeholder="1234567890" maxlength="10">
+    <button onclick="login()">الدخول</button>
+  </div>
 
-  <footer>© 2025 PredictorPro</footer>
+  <div class="container hidden" id="game">
+    <h2>ركلات الترجيح - PredictorPro</h2>
+    <div class="progress" id="progress">
+      <div class="step">×2</div>
+      <div class="step">×4</div>
+      <div class="step">×12</div>
+      <div class="step">×20</div>
+      <div class="step">×32</div>
+    </div>
+    <div class="grid" id="grid">
+      <!-- 15 cells -->
+      ${Array(15).fill().map((_,i) => `<div class="cell" data-id="${i+1}">⚽</div>`).join('')}
+    </div>
+    <button onclick="getSignal()" id="signalBtn">الحصول على إشارة</button>
+    <div class="faq">
+      <h3>الأسئلة الشائعة</h3>
+      <p>1. كيف تعمل الإشارة؟</p>
+      <p>عند الضغط على «الحصول على إشارة»، ... يظهر كرة واحدة — وهي «الإشارة» للرهان.</p>
+      <p>2. ماذا تعني المراحل الخمس؟</p>
+      <p>كل نقرة تولّد إشارة جديدة (حتى 5) ...</p>
+      <p>3. كيف أدير البنك الخاص بي؟</p>
+      <p>ننصح بتثبيت الربح عند الوصول إلى الخطوة الثالثة أو الرابعة ...</p>
+    </div>
+  </div>
 
   <script>
-    function startPredictor() {
-      alert("🔑 Введите свой ID Melbet, чтобы активировать PredictorPro!");
+    let step = 0;
+    function login(){
+      const id = document.getElementById('idInput').value;
+      if(/^\d{10}$/.test(id)){
+        document.getElementById('login').classList.add('hidden');
+        document.getElementById('game').classList.remove('hidden');
+      } else alert('الـ ID لازم يكون 10 أرقام!');
+    }
+    function getSignal(){
+      const cells = document.querySelectorAll('.cell');
+      cells.forEach(c => c.classList.remove('active'));
+      const rand = Math.floor(Math.random()*cells.length);
+      cells[rand].classList.add('active');
+      // animate
+      setTimeout(() => {
+        if(step < 4) step++;
+        const progress = document.getElementById('progress').children;
+        Array.from(progress).forEach((el,i)=> el.classList.toggle('active', i===step));
+      }, 3000); // 3s simulation
     }
   </script>
 </body>
