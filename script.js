@@ -20,10 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
         getSignalButton.disabled = true;
 
         ballSpots.forEach(spot => spot.classList.remove('active'));
-        
+
         const randomIndex = Math.floor(Math.random() * ballSpots.length);
         const randomBall = ballSpots[randomIndex];
-        
+
         randomBall.classList.add('active');
 
         if (currentMultiplierIndex < multipliers.length) {
