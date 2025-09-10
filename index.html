@@ -1,276 +1,106 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пенальти на 25 ударов</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #388e3c;
-            color: white;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .game-container {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        }
-
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .score-container {
-            margin-bottom: 20px;
-        }
-
-        .message {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #ffeb3b;
-        }
-
-        .field {
-            position: relative;
-            width: 600px;
-            height: 300px;
-            background: #558b2f;
-            border-bottom: 20px solid #a0a0a0;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        .goal {
-            position: relative;
-            width: 500px;
-            height: 250px;
-            background: #e0e0e0;
-            border: 5px solid #a0a0a0;
-            overflow: hidden;
-        }
-
-        .goalkeeper {
-            position: absolute;
-            width: 60px;
-            height: 100px;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            background: #2196f3;
-            border-radius: 50% 50% 0 0;
-            box-shadow: inset 0 -5px 10px rgba(0,0,0,0.3);
-            transition: all 0.5s cubic-bezier(.57,-0.04,.34,1.21);
-        }
-
-        .ball {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 5;
-            background: radial-gradient(circle at 30% 30%, #fff 0%, #fff 20%, #000 20%, #000 40%, #fff 40%, #fff 60%, #000 60%, #000 80%, #fff 80%, #fff 100%);
-            border-radius: 50%;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.4);
-            transition: all 0.5s ease-out;
-        }
-
-        .target-grid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            grid-template-rows: repeat(5, 1fr);
-        }
-
-        .target-spot {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .target-spot::after {
-            content: '';
-            width: 20px;
-            height: 20px;
-            background-color: #ffc107;
-            border-radius: 50%;
-            opacity: 0;
-            transform: scale(0);
-            transition: transform 0.3s, opacity 0.3s;
-        }
-
-        .target-spot.active::after {
-            opacity: 1;
-            transform: scale(1);
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0% { opacity: 0.7; }
-            50% { opacity: 1; }
-            100% { opacity: 0.7; }
-        }
-
-        button {
-            padding: 15px 30px;
-            font-size: 1.2em;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #00796b;
-            color: white;
-            margin: 0 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #004d40;
-        }
-
-        .hidden {
-            display: none;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PredictorPro Penalty</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #222;
+    color: white;
+    text-align: center;
+}
+.container {
+    background: #1a1a1a;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #000;
+}
+h1 {
+    margin-bottom: 20px;
+}
+.goal {
+    display: grid;
+    grid-template-columns: repeat(5, 60px);
+    grid-template-rows: repeat(3, 60px);
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.cell {
+    width: 60px;
+    height: 60px;
+    background-color: #333;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cell.active {
+    background-color: #ffeb3b;
+}
+.cell span {
+    font-size: 30px;
+}
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+}
+button:hover {
+    background-color: #218838;
+}
+</style>
 </head>
 <body>
-    <div class="game-container">
-        <h1>Penalty Shootout</h1>
-        <div class="score-container">
-            <p>Счет: <span id="score">0</span> / 25</p>
-            <p id="message" class="message"></p>
-        </div>
-        <div class="field">
-            <div class="goal">
-                <div class="goalkeeper"></div>
-                <div class="ball"></div>
-                <div class="target-grid">
-                    <div class="target-spot" data-id="1"></div>
-                    <div class="target-spot" data-id="2"></div>
-                    <div class="target-spot" data-id="3"></div>
-                    <div class="target-spot" data-id="4"></div>
-                    <div class="target-spot" data-id="5"></div>
-                    <div class="target-spot" data-id="6"></div>
-                    <div class="target-spot" data-id="7"></div>
-                    <div class="target-spot" data-id="8"></div>
-                    <div class="target-spot" data-id="9"></div>
-                    <div class="target-spot" data-id="10"></div>
-                    <div class="target-spot" data-id="11"></div>
-                    <div class="target-spot" data-id="12"></div>
-                    <div class="target-spot" data-id="13"></div>
-                    <div class="target-spot" data-id="14"></div>
-                    <div class="target-spot" data-id="15"></div>
-                    <div class="target-spot" data-id="16"></div>
-                    <div class="target-spot" data-id="17"></div>
-                    <div class="target-spot" data-id="18"></div>
-                    <div class="target-spot" data-id="19"></div>
-                    <div class="target-spot" data-id="20"></div>
-                    <div class="target-spot" data-id="21"></div>
-                    <div class="target-spot" data-id="22"></div>
-                    <div class="target-spot" data-id="23"></div>
-                    <div class="target-spot" data-id="24"></div>
-                    <div class="target-spot" data-id="25"></div>
-                </div>
-            </div>
-        </div>
-        <button id="get-signal-button">Получить сигнал</button>
-        <div class="shooting-buttons-container hidden">
-            <button id="shoot-button">Ударить!</button>
-        </div>
+<div class="container">
+    <h1>PredictorPro Penalty</h1>
+    <div class="goal" id="goal">
+        <!-- 15 ячеек -->
+        <div class="cell" data-id="1"><span>⚽</span></div>
+        <div class="cell" data-id="2"><span>⚽</span></div>
+        <div class="cell" data-id="3"><span>⚽</span></div>
+        <div class="cell" data-id="4"><span>⚽</span></div>
+        <div class="cell" data-id="5"><span>⚽</span></div>
+
+        <div class="cell" data-id="6"><span>⚽</span></div>
+        <div class="cell" data-id="7"><span>⚽</span></div>
+        <div class="cell" data-id="8"><span>⚽</span></div>
+        <div class="cell" data-id="9"><span>⚽</span></div>
+        <div class="cell" data-id="10"><span>⚽</span></div>
+
+        <div class="cell" data-id="11"><span>⚽</span></div>
+        <div class="cell" data-id="12"><span>⚽</span></div>
+        <div class="cell" data-id="13"><span>⚽</span></div>
+        <div class="cell" data-id="14"><span>⚽</span></div>
+        <div class="cell" data-id="15"><span>⚽</span></div>
     </div>
+    <button id="get-signal">Получить сигнал</button>
+</div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const getSignalButton = document.getElementById('get-signal-button');
-            const shootButton = document.getElementById('shoot-button');
-            const messageElement = document.getElementById('message');
-            const scoreElement = document.getElementById('score');
-            const goalkeeper = document.querySelector('.goalkeeper');
-            const ball = document.querySelector('.ball');
-            const targetSpots = document.querySelectorAll('.target-spot');
-            const goal = document.querySelector('.goal');
+<script>
+const button = document.getElementById('get-signal');
+const cells = document.querySelectorAll('.cell');
+let currentActive = null;
 
-            let score = 0;
-            let shotsTaken = 0;
-            const totalShots = 25;
-            let currentSignalId = null;
-            let gameActive = false;
-
-            function getKeeperPosition(targetId) {
-                const row = Math.floor((targetId - 1) / 5);
-                const col = (targetId - 1) % 5;
-                const positions = ['15%', '35%', '50%', '65%', '85%'];
-                const keeperPositionX = positions[col];
-                return keeperPositionX;
-            }
-
-            function showSignal() {
-                if (!gameActive) return;
-                
-                if (currentSignalId) {
-                    document.querySelector(`[data-id="${currentSignalId}"]`).classList.remove('active');
-                }
-
-                currentSignalId = Math.floor(Math.random() * totalShots) + 1;
-                const targetSpot = document.querySelector(`[data-id="${currentSignalId}"]`);
-                
-                targetSpot.classList.add('active');
-                messageElement.textContent = 'Сигнал получен! Готовьтесь бить.';
-
-                getSignalButton.classList.add('hidden');
-                shootButton.parentElement.classList.remove('hidden');
-            }
-
-            function handleShoot() {
-                if (!gameActive || !currentSignalId) return;
-                
-                const targetSpot = document.querySelector(`[data-id="${currentSignalId}"]`);
-                const targetRect = targetSpot.getBoundingClientRect();
-                const goalRect = goal.getBoundingClientRect();
-
-                let keeperJumpId;
-                do {
-                    keeperJumpId = Math.floor(Math.random() * totalShots) + 1;
-                } while (keeperJumpId === currentSignalId);
-
-                const keeperPositionX = getKeeperPosition(keeperJumpId);
-                goalkeeper.style.left = keeperPositionX;
-                
-                ball.style.top = `${targetRect.top - goalRect.top + targetRect.height / 2}px`;
-                ball.style.left = `${targetRect.left - goalRect.left + targetRect.width / 2}px`;
-
-                setTimeout(() => {
-                    score++;
-                    shotsTaken++;
-                    messageElement.textContent = 'ГОЛ! 🎉';
-                    scoreElement.textContent = `${score} / ${totalShots}`;
-                    
-                    setTimeout(() => {
-                        targetSpot.classList.remove('active');
-                        ball.style.top = 'auto';
-                        ball.style.bottom = '10px';
-                        ball.style.left = '50%';
-                        goalkeeper.style.left = '50%';
-                        
-                        if (shotsTaken >= totalShots) {
-                            messageElement.textContent = `Игра окончена! Вы забили ${score} из ${
-
+button.addEventListener('click', () => {
+    if(currentActive) {
+        currentActive.classList.remove('active');
+    }
+    const randomIndex = Math.floor(Math.random() * cells.length);
+    currentActive = cells[randomIndex];
+    currentActive.classList.add('active');
+});
+</script>
+</body>
+</html>
