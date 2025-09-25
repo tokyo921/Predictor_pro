@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>محمد - إشارات خاصة</title>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&display=swap" rel="stylesheet">
+  <title>محمد - إشارات Melbet</title>
   <style>
     body {
       margin: 0;
@@ -15,20 +14,13 @@
       direction: rtl;
     }
     .button {
-      background: linear-gradient(45deg, #d4145a, #fbb03b);
+      background: linear-gradient(45deg, #0f0, #0c0);
       border: none;
       border-radius: 20px;
       color: white;
       padding: 15px 30px;
-      margin: 10px;
       font-size: 1.2em;
       cursor: pointer;
-      box-shadow: 0 0 20px rgba(255, 0, 100, 0.6);
-      text-decoration: none;
-      display: inline-block;
-    }
-    .button-green {
-      background: linear-gradient(45deg, #0f0, #0c0);
       box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
       animation: pulse 1.5s infinite;
     }
@@ -37,106 +29,85 @@
       50% { box-shadow: 0 0 30px #0f0; }
       100% { box-shadow: 0 0 10px #0f0; }
     }
-    .section {
-      padding: 30px 20px;
-    }
-    table {
-      margin: 0 auto;
-      border-collapse: collapse;
-      width: 80%;
-      margin-bottom: 40px;
-    }
-    th, td {
-      padding: 12px;
-      border-bottom: 1px solid #444;
-    }
-    .comment {
-      background: #111c2b;
-      margin: 10px auto;
-      padding: 15px;
-      border-radius: 15px;
-      max-width: 700px;
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
       display: flex;
+      justify-content: center;
       align-items: center;
     }
-    .comment img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      margin-left: 15px;
+    .modal-content {
+      background: #111c2b;
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
     }
-    .comment-info span:first-child {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
+    input {
+      padding: 10px;
+      width: 80%;
+      border-radius: 8px;
+      border: none;
+      margin: 10px 0;
+      text-align: center;
+      font-size: 1.2em;
     }
-    #signal-display {
-      font-size: 1.5em;
+    .hidden { display: none; }
+    .loading {
+      font-size: 1.3em;
       color: #00ffcc;
-      margin-top: 20px;
+      margin: 15px 0;
     }
   </style>
 </head>
 <body>
-  <div class="section">
-    <h1>🚀 مرحباً بك! فرصتك لم تنته بعد، بضع لحظات فقط تفصلك عن النجاح.</h1>
-    <a class="button" href="https://t.me/Muhammad_Predictor_bot" target="_blank">✉️ راسل محمد</a>
-    <a class="button" href="https://reffpa.com/L?tag=d_3713491m_97c_&site=3713491&ad=97&r=registration" target="_blank">🎮 ابدأ اللعب الآن</a>
-    <button class="button button-green" onclick="getSignal()">✅ الحصول على الإشارة</button>
-    <div id="signal-display"></div>
-  </div>
+  <h1>🚀 مرحباً بك مع محمد</h1>
+  <button class="button" onclick="openModal()">✅ الحصول على الإشارة</button>
 
-  <div class="section">
-    <h2>الفائزون السابقون</h2>
-    <table>
-      <tr><th>الاسم</th><th>التعليق</th><th>الربح</th></tr>
-      <tr><td>أحمد العربي</td><td>شكراً محمد، الآن سددت ديوني وأنا مرتاح</td><td>9,120 TND</td></tr>
-      <tr><td>سامي التونسي</td><td>بصراحة لم أصدق في البداية، لكن الآن أربح يومياً</td><td>21,457 TND</td></tr>
-      <tr><td>نادية بن عمر</td><td>ثقة 100%! شكراً لمحمد، حياتي تغيرت</td><td>18,056 TND</td></tr>
-      <tr><td>طارق الحداد</td><td>لم أعد أحتاج للعمل كثيراً، الربح يغطي كل شيء!</td><td>15,231 TND</td></tr>
-    </table>
-  </div>
-
-  <div class="section">
-    <div class="comment">
-      <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="avatar">
-      <div class="comment-info">
-        <span>خالد التونسي</span>
-        <span>محمد ساعدني، الآن ليس عندي أي مشاكل مالية.</span>
-      </div>
-    </div>
-    <div class="comment">
-      <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="avatar">
-      <div class="comment-info">
-        <span>مروان الجبالي</span>
-        <span>كنت متردد في البداية، لكن الآن ربحت آلاف الدنانير!</span>
-      </div>
-    </div>
-    <div class="comment">
-      <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="avatar">
-      <div class="comment-info">
-        <span>إيمان العرفاوي</span>
-        <span>بفضل محمد أنا أعيش حياة جديدة مليئة بالحرية.</span>
+  <!-- Модалка -->
+  <div id="signalModal" class="modal">
+    <div class="modal-content">
+      <h2>أدخل معرف Melbet الخاص بك</h2>
+      <input type="text" id="melbetId" placeholder="10 أرقام" maxlength="10">
+      <button class="button" onclick="startProcess()">تأكيد</button>
+      <div id="loadingText" class="loading hidden">🔄 جاري ربط البرنامج...</div>
+      <div id="finalMessage" class="hidden" style="color: #ffcc00; font-size:1.3em; margin-top:15px;">
+        ⚠️ الرجاء شحن حساب Melbet الخاص بك
       </div>
     </div>
   </div>
 
   <script>
-    let signalActive = false;
+    function openModal() {
+      document.getElementById("signalModal").style.display = "flex";
+    }
 
-    function getSignal() {
-      const display = document.getElementById('signal-display');
-      if (signalActive) return;
+    function startProcess() {
+      const input = document.getElementById("melbetId").value.trim();
+      if (input.length !== 10) {
+        alert("⚠️ الرجاء إدخال معرف صحيح مكون من 10 أرقام");
+        return;
+      }
 
-      signalActive = true;
-      // عشوائي بين 1.2 و 10
-      const multiplier = (Math.random() * (10 - 1.2) + 1.2).toFixed(2);
-      display.textContent = `🚀 إشارة جديدة جاهزة: ×${multiplier}`;
+      const loading = document.getElementById("loadingText");
+      const finalMsg = document.getElementById("finalMessage");
+
+      loading.textContent = "🔄 جاري ربط البرنامج...";
+      loading.classList.remove("hidden");
 
       setTimeout(() => {
-        display.textContent = '⚠️ للحصول على الإشارة يجب شحن الحساب بـ 5 دينار تونسي.';
-        signalActive = false;
-      }, 3000);
+        loading.textContent = "🚀 جاري تحضير الإشارة...";
+      }, 2000);
+
+      setTimeout(() => {
+        loading.classList.add("hidden");
+        finalMsg.classList.remove("hidden");
+      }, 4000);
     }
   </script>
 </body>
