@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>محمد - صفحة الإشارات</title>
+  <title>صفحة محمد - Melbet</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -40,17 +40,50 @@
     .section {
       padding: 30px 20px;
     }
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 90%;
+      margin-bottom: 40px;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #444;
+    }
+    .comment {
+      background: #111c2b;
+      margin: 10px auto;
+      padding: 15px;
+      border-radius: 15px;
+      max-width: 700px;
+      display: flex;
+      align-items: center;
+    }
+    .comment img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-left: 15px;
+    }
+    .comment-info span:first-child {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
     #signal-display {
-      font-size: 1.3em;
+      font-size: 1.5em;
       color: #00ffcc;
       margin-top: 20px;
     }
-    /* модальное окно */
+    /* Modal */
     .modal {
       display: none;
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
       background: rgba(0,0,0,0.8);
       justify-content: center;
       align-items: center;
@@ -58,68 +91,105 @@
     .modal-content {
       background: #111c2b;
       padding: 20px;
-      border-radius: 15px;
+      border-radius: 12px;
+      max-width: 350px;
+      width: 90%;
       text-align: center;
-      width: 80%;
-      max-width: 400px;
     }
     .modal input {
       padding: 10px;
-      width: 80%;
-      border-radius: 8px;
+      font-size: 1em;
+      width: 90%;
+      margin: 15px 0;
+      border-radius: 6px;
       border: none;
-      margin: 10px 0;
       text-align: center;
-      font-size: 1.1em;
     }
   </style>
 </head>
 <body>
   <div class="section">
-    <h1>🚀 إشارات محمد الحصرية</h1>
-    <a class="button" href="https://t.me/Muhammad_Predictor_bot" target="_blank">✉️ راسل محمد</a>
-    <a class="button" href="https://reffpa.com/L?tag=d_3713491m_97c_&site=3713491&ad=97&r=registration" target="_blank">🎮 Melbet التسجيل</a>
-    <button class="button button-green" onclick="openModal()">✅ الحصول على الإشارة</button>
+    <h1>🚀 إشارات محمد - اربح مع Melbet الآن</h1>
+    <a class="button" href="https://t.me/Muhammad_Predictor_bot" target="_blank">✉️ تواصل مع محمد</a>
+    <a class="button" href="https://refpa3665.com/L?tag=d_4683910m_59701c_&site=4683910&ad=59701&r=registration" target="_blank">📝 سجل في Melbet</a>
+    <button class="button button-green" onclick="openModal()">✅ احصل على إشارة</button>
     <div id="signal-display"></div>
+    <div id="user-id"></div>
   </div>
 
-  <!-- модальное окно -->
-  <div class="modal" id="signalModal">
+  <div class="section">
+    <h2>الفائزون في الجولات السابقة 🎉</h2>
+    <table>
+      <tr><th>الاسم</th><th>التعليق</th><th>الأرباح</th></tr>
+      <tr><td>أحمد العربي</td><td>شكراً محمد، سددت ديوني بالبنك والآن مرتاح</td><td>912,350 TND</td></tr>
+      <tr><td>سعيد بن سالم</td><td>بصراحة لم أصدق، الآن أربح يومياً</td><td>2,145,700 TND</td></tr>
+      <tr><td>نجوى التونسية</td><td>محمد أنقذ حياتي! أصبحت حرة</td><td>1,805,600 TND</td></tr>
+      <tr><td>طارق منصور</td><td>لم أعد أحتاج للعمل! لدي كل شيء</td><td>1,523,100 TND</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="comment">
+      <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="avatar">
+      <div class="comment-info">
+        <span>يوسف بن علي</span>
+        <span>محمد ساعدني أسدد قرضي البنكي. شكراً جزيلاً!</span>
+      </div>
+    </div>
+    <div class="comment">
+      <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="avatar">
+      <div class="comment-info">
+        <span>كريم الجبالي</span>
+        <span>في البداية شككت، لكن الآن أربح آلاف الدنانير!</span>
+      </div>
+    </div>
+    <div class="comment">
+      <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="avatar">
+      <div class="comment-info">
+        <span>ريم منصور</span>
+        <span>الآن أعيش بحرية مالية، شكراً لمحمد ❤️</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="idModal" class="modal">
     <div class="modal-content">
-      <h2>⚡ أدخل معرف Melbet</h2>
-      <input type="text" id="melbetId" placeholder="10 أرقام">
-      <button class="button" onclick="startSignal()">تأكيد</button>
+      <h2>أدخل معرف Melbet الخاص بك (10 أرقام)</h2>
+      <input type="text" id="melbetId" maxlength="10" placeholder="XXXXXXXXXX">
+      <button class="button button-green" onclick="submitId()">تأكيد</button>
     </div>
   </div>
 
   <script>
-    let signalActive = false;
-
     function openModal() {
-      document.getElementById('signalModal').style.display = 'flex';
+      document.getElementById("idModal").style.display = "flex";
     }
 
-    function startSignal() {
-      const melbetId = document.getElementById('melbetId').value.trim();
-      if (melbetId.length !== 10 || isNaN(melbetId)) {
+    function submitId() {
+      const id = document.getElementById("melbetId").value;
+      if (id.length !== 10 || isNaN(id)) {
         alert("⚠️ الرجاء إدخال معرف صحيح مكون من 10 أرقام");
         return;
       }
+      document.getElementById("idModal").style.display = "none";
+      document.getElementById("user-id").textContent = "✅ معرفك: " + id;
 
-      document.getElementById('signalModal').style.display = 'none';
-
-      const display = document.getElementById('signal-display');
-      signalActive = true;
-      display.textContent = "🔄 جاري ربط البرنامج...";
-
+      const display = document.getElementById("signal-display");
+      display.textContent = "⏳ جاري ربط البرنامج...";
       setTimeout(() => {
-        display.textContent = "🚀 جاري تحضير الإشارة...";
-      }, 2000);
-
+        display.textContent = "⚡ جاري تجهيز الإشارة...";
+      }, 3000);
       setTimeout(() => {
-        display.textContent = "⚠️ الرجاء شحن حساب Melbet الخاص بك";
-        signalActive = false;
-      }, 4000);
+        display.textContent = "⚠️ يجب عليك شحن حساب Melbet";
+      }, 6000);
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById("idModal");
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
     }
   </script>
 </body>
