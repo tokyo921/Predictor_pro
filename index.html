@@ -3,135 +3,160 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aviator Predictor Bot</title>
+  <title>Rocket Landing Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: #0f0f0f;
-      color: #00ff9f;
-      font-family: 'Courier New', monospace;
       margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #000;
-      padding: 20px;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(to bottom, #060b1a, #000000);
+      color: white;
       text-align: center;
-      border-bottom: 2px solid #00ff9f;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      padding: 20px;
     }
     .button {
-      background-color: #00ff9f;
-      color: #000;
-      padding: 14px 24px;
+      background: linear-gradient(45deg, #d4145a, #fbb03b);
       border: none;
-      border-radius: 10px;
-      font-weight: bold;
+      border-radius: 20px;
+      color: white;
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 1.2em;
       cursor: pointer;
+      box-shadow: 0 0 20px rgba(255, 0, 100, 0.6);
       text-decoration: none;
-      transition: transform 0.2s;
+      display: inline-block;
     }
-    .button:hover {
-      transform: scale(1.05);
+    .button-green {
+      background: linear-gradient(45deg, #0f0, #0c0);
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+      animation: pulse 1.5s infinite;
     }
-    .ticker {
-      background-color: #121212;
-      color: #00ff9f;
-      padding: 10px;
-      border-top: 1px solid #00ff9f;
-      border-bottom: 1px solid #00ff9f;
+    @keyframes pulse {
+      0% { box-shadow: 0 0 10px #0f0; }
+      50% { box-shadow: 0 0 30px #0f0; }
+      100% { box-shadow: 0 0 10px #0f0; }
+    }
+    .section {
+      padding: 30px 20px;
+    }
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 80%;
+      margin-bottom: 40px;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #444;
+    }
+    .comment {
+      background: #111c2b;
+      margin: 10px auto;
+      padding: 15px;
+      border-radius: 15px;
+      max-width: 700px;
+      display: flex;
+      align-items: center;
+    }
+    .comment img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-right: 15px;
+    }
+    .comment-info span:first-child {
+      display: block;
       font-weight: bold;
+      margin-bottom: 5px;
     }
-    .main-box {
-      background-color: #1a1a1a;
-      padding: 30px;
-      margin: 20px auto;
-      max-width: 800px;
-      border-radius: 12px;
-      border: 1px solid #00ff9f;
-      opacity: 0;
-      animation: fadeIn 1.2s ease-in-out forwards;
-    }
-    .column {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-    .column .left p,
-    .column .right p {
-      margin: 10px 0;
-      font-weight: bold;
-    }
-    .game-box {
-      background-color: #222;
-      margin: 40px auto;
-      padding: 40px;
-      width: 300px;
-      border-radius: 12px;
-      border: 2px dashed #00ff9f;
-      color: #fff;
-      text-align: center;
-      font-size: 18px;
-      opacity: 0;
-      animation: fadeIn 1.2s ease-in-out 0.5s forwards;
-    }
-    .glow {
-      animation: glow 1.5s infinite;
-    }
-    @keyframes glow {
-      0% { box-shadow: 0 0 5px #00ff9f; }
-      50% { box-shadow: 0 0 20px #00ff9f; }
-      100% { box-shadow: 0 0 5px #00ff9f; }
-    }
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
+    #signal-display {
+      font-size: 1.5em;
+      color: #00ffcc;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🚀 Aviator Signal Predictor</h1>
-    <p>අනන්‍ය හෑක් ක්‍රමයක් - ගෙන ඒමට ඉදිරිපත් වූ ගණන්</p>
-  </header>
-  <div class="buttons">
-    <a href="https://affpa.top/L?tag=d_3713491m_29091c_&site=3713491&ad=29091&r=registration" class="button">වෙබ් අඩවියට පිවිසෙන්න</a>
-    <a href="id.html" class="button glow">බොටයට පිවිසෙන්න</a>
+  <div class="section">
+    <h1>ඔබගේ වාරය තවම නැවතීලා නෑ. අදහස් වීමට තවත් තත්පර කිහිපයකි!</h1>
+    <a class="button" href="https://t.me/virat999bot" target="_blank">✉️ විරාත්ට ලියන්න</a>
+    <a class="button" href="https://reffpa.com/L?tag=d_3713491m_97c_&site=3713491&ad=97&r=registration" target="_blank">🎮 ඇවියේටර් ක්‍රීඩාව</a>
+    <button class="button button-green" onclick="getSignal()">✅ සංඥා ලබාගන්න</button>
+    <div id="signal-display"></div>
   </div>
-  <div class="ticker">
-    <marquee behavior="scroll" direction="left">
-      🟢 Kasun ලැබූයේ 8 400 LKR | 🟢 Minul x19.4 ලබාගත්තා 600 LKR ත්‍යාගයකින් | 🟢 Sameera උදෑසන ක්‍රිඩාවේදී 13 200 LKR ලැබුවා | 🟢 Amaya x22.1 ලබාගෙන 900 LKR වලින් දිනා ගත්තා | 🟢 Dilan රාත්‍රී session එකෙන් 10 500 LKR | 🟢 Prabodha x25.7 මත 18 000 LKR | 🟢 Nimesha x20.4 න් 14 700 LKR | 🟢 Sahan 1 000 LKR න් 16 900 LKR ක් දිනාගත්තා
-    </marquee>
+
+  <div class="section">
+    <h2>පසුගිය වාරයේ ජයග්‍රාහකයින්</h2>
+    <table>
+      <tr><th>නම</th><th>අදහස</th><th>ලාභය</th></tr>
+      <tr><td>Ahmed Aravi</td><td>ස්තුතියි විරාත්, මම බැංකුවේ ණය වැටුප් කරලා දැන් පොළිය අතහැරන තැනට ආවා</td><td>912,350 LKR</td></tr>
+      <tr><td>Sudu Bandara</td><td>මම මුලින් විශ්වාස නෑ කියලා හිතුවා, දැන් හැම දිනෙකම සෙල්ලම් කරනවා</td><td>2,145,700 LKR</td></tr>
+      <tr><td>Nadeesha Kumari</td><td>විශ්වාසයි! විරාත්ට ස්තුතියි, දැන් මම නිදහසේ ජීවිතයකි</td><td>1,805,600 LKR</td></tr>
+      <tr><td>Tharindu Bandara</td><td>දැනට ආයේ වැඩක් කරන්න ඕන නෑ! මට ජීවිතේ හැමදේම තියනවා!</td><td>1,523,100 LKR</td></tr>
+    </table>
   </div>
-  <div class="main-box">
-    <div class="column">
-      <div class="left">
-        <p>🧑‍💻 Dilshan: "එක රාත්‍රියකින් 18 000 LKR. බොට් එක ඇත්තටම වැඩ කරනවා!"</p>
-        <p>🧑‍💻 Nadeesha: "සංග්‍රහ අනුව ක්‍රීඩා කළා - දින 2කින් +12 300 LKR!"</p>
-        <p>🧑‍💻 Tharindu: "700 LKR සිට 11 400 LKR දක්වා!"</p>
-        <p>🧑‍💻 Sanjeewa: "ඇසුරක් ලෙස පරීක්ෂා කළා - මුලින්ම 9 300 LKR!"</p>
-        <p>🧑‍💻 Ishara: "දැන් මට බොට් සංග්‍රහය මතයි. සතියක් තුළ 14 000 LKR!"</p>
+
+  <div class="section">
+    <div class="comment">
+      <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="avatar">
+      <div class="comment-info">
+        <span>Arjuna Fernando</span>
+        <span>ස්තුතියි විරාත්, මම බැංකුවේ ණය වැටුප් කරලා දැන් මට තවත් කරදරක් නෑ</span>
       </div>
-      <div class="right">
-        <p>💰 Dilshan: 18 000 LKR</p>
-        <p>💰 Nadeesha: 12 300 LKR</p>
-        <p>💰 Tharindu: 11 400 LKR</p>
-        <p>💰 Sanjeewa: 9 300 LKR</p>
-        <p>💰 Ishara: 14 000 LKR</p>
+    </div>
+    <div class="comment">
+      <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="avatar">
+      <div class="comment-info">
+        <span>Kavinda Raj</span>
+        <span>මම මුලින් විරාත්ට විශ්වාස නෑ කියලා හිතුවා. දැන් මම ඉතා ඉක්මනින් ලක්ෂ ගානක් ප්‍රමාණයකි!</span>
+      </div>
+    </div>
+    <div class="comment">
+      <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="avatar">
+      <div class="comment-info">
+        <span>Nadeesha Kumari</span>
+        <span>මම වර්තමානයේ නිදහසේ ජීවිතයක් ජීවත්වෙනවා, ස්තුතියි විරාත්ට!</span>
+      </div>
+    </div>
+    <div class="comment">
+      <img src="https://randomuser.me/api/portraits/men/4.jpg" alt="avatar">
+      <div class="comment-info">
+        <span>Ravindu Senanayake</span>
+        <span>ඔයා හොයාගත්ත ජීවිත මගට වඩා මට ගැලපෙන්නෙ නැහැ. මම වෙනස් වෙන්න ගියාවි!</span>
       </div>
     </div>
   </div>
-  <div class="game-box">
-    🎮 <br><br>
-    <strong>x17.3</strong> — ඊළඟ ගුණාංකය!
-  </div>
+
+  <script>
+    let signalActive = false;
+
+    function getSignal() {
+      const display = document.getElementById('signal-display');
+      
+      if (signalActive) {
+        display.textContent = '🎯 ක්‍රීඩාව සිදුවෙමින් පවතී, කරුණාකර රැඳී සිටින්න...';
+        return;
+      }
+      
+      signalActive = true;
+      let multiplier;
+      const random = Math.random();
+      
+      if (random < 0.7) {
+        multiplier = (Math.random() * (1.45 - 1) + 1).toFixed(2); // 70% signals between 1 and 1.45
+      } else if (random < 0.93) {
+        multiplier = (Math.random() * (5 - 1.8) + 1.8).toFixed(2); // 23% signals between 1.8 and 5
+      } else if (random < 0.99) {
+        multiplier = (Math.random() * (70 - 15) + 15).toFixed(2); // 6% signals between 15 and 70
+      } else {
+        multiplier = (Math.random() * (190 - 100) + 100).toFixed(2); // 1% signals between 100 and 190
+      }
+      
+      display.textContent = `🚀 නව සංඥාවක් සූදානම්යි: ×${multiplier}`;
+      setTimeout(() => {
+        signalActive = false;
+      }, 9000);
+    }
+  </script>
 </body>
 </html>
