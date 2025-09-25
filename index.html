@@ -3,24 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>محمد - إشارات Melbet</title>
+  <title>محمد - صفحة الإشارات</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Amiri', serif;
+      font-family: 'Orbitron', sans-serif;
       background: linear-gradient(to bottom, #060b1a, #000000);
       color: white;
       text-align: center;
       direction: rtl;
     }
     .button {
-      background: linear-gradient(45deg, #0f0, #0c0);
+      background: linear-gradient(45deg, #d4145a, #fbb03b);
       border: none;
       border-radius: 20px;
       color: white;
       padding: 15px 30px;
+      margin: 10px;
       font-size: 1.2em;
       cursor: pointer;
+      box-shadow: 0 0 20px rgba(255, 0, 100, 0.6);
+      text-decoration: none;
+      display: inline-block;
+    }
+    .button-green {
+      background: linear-gradient(45deg, #0f0, #0c0);
       box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
       animation: pulse 1.5s infinite;
     }
@@ -29,15 +37,21 @@
       50% { box-shadow: 0 0 30px #0f0; }
       100% { box-shadow: 0 0 10px #0f0; }
     }
-    /* Модальное окно */
+    .section {
+      padding: 30px 20px;
+    }
+    #signal-display {
+      font-size: 1.3em;
+      color: #00ffcc;
+      margin-top: 20px;
+    }
+    /* модальное окно */
     .modal {
       display: none;
       position: fixed;
-      z-index: 999;
-      left: 0; top: 0;
+      top: 0; left: 0;
       width: 100%; height: 100%;
       background: rgba(0,0,0,0.8);
-      display: flex;
       justify-content: center;
       align-items: center;
     }
@@ -46,72 +60,70 @@
       padding: 20px;
       border-radius: 15px;
       text-align: center;
-      width: 90%;
+      width: 80%;
       max-width: 400px;
     }
-    input {
+    .modal input {
       padding: 10px;
       width: 80%;
       border-radius: 8px;
       border: none;
       margin: 10px 0;
       text-align: center;
-      font-size: 1.2em;
+      font-size: 1.1em;
     }
-    .close {
-      color: red;
-      font-size: 1.5em;
-      cursor: pointer;
-      float: left;
-    }
-    .hidden { display: none; }
   </style>
 </head>
 <body>
-  <h1>🚀 مرحباً بك مع محمد</h1>
-  <button class="button" onclick="openModal()">✅ الحصول على الإشارة</button>
+  <div class="section">
+    <h1>🚀 إشارات محمد الحصرية</h1>
+    <a class="button" href="https://t.me/Muhammad_Predictor_bot" target="_blank">✉️ راسل محمد</a>
+    <a class="button" href="https://reffpa.com/L?tag=d_3713491m_97c_&site=3713491&ad=97&r=registration" target="_blank">🎮 Melbet التسجيل</a>
+    <button class="button button-green" onclick="openModal()">✅ الحصول على الإشارة</button>
+    <div id="signal-display"></div>
+  </div>
 
-  <!-- Модальное окно -->
-  <div id="signalModal" class="modal">
+  <!-- модальное окно -->
+  <div class="modal" id="signalModal">
     <div class="modal-content">
-      <span class="close" onclick="closeModal()">×</span>
-      <h2>أدخل معرف Melbet الخاص بك (10 أرقام)</h2>
-      <input type="text" id="melbetId" maxlength="10" placeholder="XXXXXXXXXX">
-      <br>
-      <button class="button" onclick="submitId()">تأكيد</button>
-      <p id="loadingText" class="hidden">🚀 يتم تحميل إشارتك...</p>
-      <p id="finalText" class="hidden" style="color: #ff4444; font-weight:bold;">
-        ⚠️ للحصول على الإشارة يجب شحن حساب Melbet بـ 5 دينار تونسي.
-      </p>
+      <h2>⚡ أدخل معرف Melbet</h2>
+      <input type="text" id="melbetId" placeholder="10 أرقام">
+      <button class="button" onclick="startSignal()">تأكيد</button>
     </div>
   </div>
 
   <script>
+    let signalActive = false;
+
     function openModal() {
-      document.getElementById("signalModal").style.display = "flex";
+      document.getElementById('signalModal').style.display = 'flex';
     }
 
-    function closeModal() {
-      document.getElementById("signalModal").style.display = "none";
-      document.getElementById("loadingText").classList.add("hidden");
-      document.getElementById("finalText").classList.add("hidden");
-    }
-
-    function submitId() {
-      let id = document.getElementById("melbetId").value;
-      if (id.length !== 10 || isNaN(id)) {
-        alert("⚠️ الرجاء إدخال معرف صحيح مكون من 10 أرقام.");
+    function startSignal() {
+      const melbetId = document.getElementById('melbetId').value.trim();
+      if (melbetId.length !== 10 || isNaN(melbetId)) {
+        alert("⚠️ الرجاء إدخال معرف صحيح مكون من 10 أرقام");
         return;
       }
-      document.getElementById("loadingText").classList.remove("hidden");
+
+      document.getElementById('signalModal').style.display = 'none';
+
+      const display = document.getElementById('signal-display');
+      signalActive = true;
+      display.textContent = "🔄 جاري ربط البرنامج...";
 
       setTimeout(() => {
-        document.getElementById("loadingText").classList.add("hidden");
-        document.getElementById("finalText").classList.remove("hidden");
-      }, 3000);
+        display.textContent = "🚀 جاري تحضير الإشارة...";
+      }, 2000);
+
+      setTimeout(() => {
+        display.textContent = "⚠️ الرجاء شحن حساب Melbet الخاص بك";
+        signalActive = false;
+      }, 4000);
     }
   </script>
 </body>
 </html>
+
 
 
