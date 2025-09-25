@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>محمد - إشارات Melbet</title>
+  <title>محمد - صفحة الإشارات</title>
   <style>
     body {
       margin: 0;
@@ -14,13 +14,20 @@
       direction: rtl;
     }
     .button {
-      background: linear-gradient(45deg, #0f0, #0c0);
+      background: linear-gradient(45deg, #d4145a, #fbb03b);
       border: none;
       border-radius: 20px;
       color: white;
       padding: 15px 30px;
+      margin: 10px;
       font-size: 1.2em;
       cursor: pointer;
+      box-shadow: 0 0 20px rgba(255, 0, 100, 0.6);
+      text-decoration: none;
+      display: inline-block;
+    }
+    .button-green {
+      background: linear-gradient(45deg, #0f0, #0c0);
       box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
       animation: pulse 1.5s infinite;
     }
@@ -29,24 +36,10 @@
       50% { box-shadow: 0 0 30px #0f0; }
       100% { box-shadow: 0 0 10px #0f0; }
     }
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 999;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-content {
-      background: #111c2b;
-      padding: 20px;
-      border-radius: 15px;
-      text-align: center;
-      width: 90%;
-      max-width: 400px;
+    #signal-display {
+      font-size: 1.3em;
+      color: #00ffcc;
+      margin-top: 20px;
     }
     input {
       padding: 10px;
@@ -55,60 +48,48 @@
       border: none;
       margin: 10px 0;
       text-align: center;
-      font-size: 1.2em;
-    }
-    .hidden { display: none; }
-    .loading {
-      font-size: 1.3em;
-      color: #00ffcc;
-      margin: 15px 0;
+      font-size: 1.1em;
     }
   </style>
 </head>
 <body>
-  <h1>🚀 مرحباً بك مع محمد</h1>
-  <button class="button" onclick="openModal()">✅ الحصول على الإشارة</button>
-
-  <!-- Модалка -->
-  <div id="signalModal" class="modal">
-    <div class="modal-content">
-      <h2>أدخل معرف Melbet الخاص بك</h2>
-      <input type="text" id="melbetId" placeholder="10 أرقام" maxlength="10">
-      <button class="button" onclick="startProcess()">تأكيد</button>
-      <div id="loadingText" class="loading hidden">🔄 جاري ربط البرنامج...</div>
-      <div id="finalMessage" class="hidden" style="color: #ffcc00; font-size:1.3em; margin-top:15px;">
-        ⚠️ الرجاء شحن حساب Melbet الخاص بك
-      </div>
-    </div>
+  <div class="section">
+    <h1>🚀 إشارات محمد الحصرية</h1>
+    <a class="button" href="https://t.me/Muhammad_Predictor_bot" target="_blank">✉️ راسل محمد</a>
+    <a class="button" href="https://reffpa.com/L?tag=d_3713491m_97c_&site=3713491&ad=97&r=registration" target="_blank">🎮 لعبة Aviator</a>
+    <button class="button button-green" onclick="getSignal()">✅ الحصول على الإشارة</button>
+    <div id="signal-display"></div>
   </div>
 
   <script>
-    function openModal() {
-      document.getElementById("signalModal").style.display = "flex";
-    }
+    let signalActive = false;
 
-    function startProcess() {
-      const input = document.getElementById("melbetId").value.trim();
-      if (input.length !== 10) {
+    function getSignal() {
+      const display = document.getElementById('signal-display');
+
+      if (signalActive) return;
+
+      // Форма для ввода ID
+      const melbetId = prompt("⚡ أدخل معرف Melbet الخاص بك (10 أرقام):");
+      if (!melbetId || melbetId.length !== 10 || isNaN(melbetId)) {
         alert("⚠️ الرجاء إدخال معرف صحيح مكون من 10 أرقام");
         return;
       }
 
-      const loading = document.getElementById("loadingText");
-      const finalMsg = document.getElementById("finalMessage");
-
-      loading.textContent = "🔄 جاري ربط البرنامج...";
-      loading.classList.remove("hidden");
+      signalActive = true;
+      display.textContent = "🔄 جاري ربط البرنامج...";
 
       setTimeout(() => {
-        loading.textContent = "🚀 جاري تحضير الإشارة...";
+        display.textContent = "🚀 جاري تحضير الإشارة...";
       }, 2000);
 
       setTimeout(() => {
-        loading.classList.add("hidden");
-        finalMsg.classList.remove("hidden");
+        display.textContent = "⚠️ الرجاء شحن حساب Melbet الخاص بك";
+        signalActive = false;
       }, 4000);
     }
   </script>
 </body>
 </html>
+
+
