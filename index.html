@@ -1,79 +1,213 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>PredictorPro - ركلات الترجيح</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1xBET — Бонус на первый депозит</title>
+  
+  <!-- Meta preview for social sharing -->
+  <meta property="og:title" content="1xBET — BONUS!" />
+  <meta property="og:description" content="BONUS — 1500 LKR." />
+  <meta property="og:image" content="/mnt/data/image.png" />
+
   <style>
-    body { margin:0; padding:0; font-family: Arial, sans-serif; background:#000; color:#fff; text-align:center; }
-    .container { padding: 20px; max-width:600px; margin:0 auto; }
-    input, button { font-size:1rem; padding:10px; margin:10px 0; border-radius:5px; border:none; }
-    input { width:200px; text-align:center; }
-    .hidden { display:none; }
-    .progress { display:flex; justify-content:space-between; margin:20px 0; }
-    .step { width:50px; height:50px; background:#444; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#888; }
-    .step.active { background:#0f0; color:#000; }
-    .grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; justify-items:center; margin:20px 0; }
-    .cell { width:40px; height:40px; background:#333; border-radius:50%; display:flex; align-items:center; justify-content:center; opacity:0.5; }
-    .cell.active { background:#ff0; opacity:1; }
-    .faq { text-align:left; margin:20px 0; color:#ccc; }
-    .faq h3 { margin-bottom:10px; }
-    .faq p { margin-bottom:8px; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0a1f44, #003366);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .lang-buttons {
+      margin-bottom: 20px;
+    }
+    .lang-buttons button {
+      background: #003366;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      padding: 8px 15px;
+      margin: 0 5px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .lang-buttons button:hover {
+      background: #002244;
+    }
+    .logo {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #00c2ff;
+      margin-bottom: 30px;
+    }
+    .big-bonus {
+      background: #00c2ff;
+      color: #003366;
+      padding: 20px 30px;
+      font-size: 2rem;
+      font-weight: bold;
+      border-radius: 12px;
+      margin-bottom: 25px;
+      box-shadow: 0 0 15px rgba(0, 194, 255, 0.4);
+    }
+    .urgent-message {
+      background: #ffcc00;
+      color: #003366;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      max-width: 400px;
+      box-shadow: 0 0 10px rgba(255, 204, 0, 0.6);
+      animation: blink 2s infinite;
+    }
+    .urgent-message a {
+      color: #003366;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    #timer {
+      font-size: 1.2rem;
+      color: #ffcc00;
+      margin-bottom: 25px;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+    .title {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      margin-bottom: 40px;
+      color: #ddd;
+    }
+    .bonus-button {
+      background-color: #00c2ff;
+      color: #fff;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 0 20px #00c2ff, 0 0 30px #00c2ff, 0 0 40px #00c2ff;
+      animation: pulse 1.5s infinite;
+    }
+    .bonus-button:hover {
+      background-color: #00aadd;
+    }
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 20px #00c2ff, 0 0 30px #00c2ff, 0 0 40px #00c2ff;
+      }
+      50% {
+        box-shadow: 0 0 30px #00f0ff, 0 0 40px #00f0ff, 0 0 50px #00f0ff;
+      }
+      100% {
+        box-shadow: 0 0 20px #00c2ff, 0 0 30px #00c2ff, 0 0 40px #00c2ff;
+      }
+    }
+    .features {
+      margin-top: 50px;
+      max-width: 400px;
+    }
+    .feature {
+      background: rgba(255,255,255,0.05);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+    /* Адаптивность */
+    @media(max-width: 500px) {
+      .title { font-size: 1.5rem; }
+      .bonus-button { width: 100%; font-size: 1rem; }
+      .big-bonus { font-size: 1.5rem; padding: 15px; }
+    }
   </style>
 </head>
+
 <body>
-  <div class="container" id="login">
-    <h1>PredictorPro</h1>
-    <p>أدخل ID Melbet (10 أرقام)</p>
-    <input id="idInput" type="text" placeholder="1234567890" maxlength="10">
-    <button onclick="login()">الدخول</button>
+  <div class="lang-buttons">
+    <button id="lang-en" onclick="setLanguage('en')">🇬🇧 English</button>
+    <button id="lang-si" onclick="setLanguage('si')">🇱🇰 Sinhala</button>
+  </div>
+  <div class="logo">1xBET</div>
+  <div class="big-bonus" data-i18n="bonus">🎉 +14000 LKR BONUS!</div>
+  <div class="urgent-message">
+    ⏳ <a href="https://affpa.top/L?tag=d_3713491m_29091c_&site=3713491&ad=29091&r=registration" target="_blank" data-i18n="urgent">Deposit within 20 minutes</a> — and your bonus will be activated!<br>
+    <span data-i18n="minDeposit">Minimum deposit: <strong>1500 LKR</strong></span>
+  </div>
+  <div id="timer"><span data-i18n="timerLabel">Bonus ends in:</span> <span id="countdown">20:00</span></div>
+  <div class="title" data-i18n="title">🎁 You have a bonus on your first deposit!</div>
+  <div class="subtitle" data-i18n="subtitle">Activate your bonus and start winning now</div>
+  <a class="bonus-button" href="https://affpa.top/L?tag=d_3713491m_29091c_&site=3713491&ad=29091&r=registration" target="_blank" data-i18n="button">
+    Claim Bonus 🎁
+  </a>
+  <div class="features">
+    <div class="feature" data-i18n="feature1">💰 Up to 14000 LKR on your first deposit</div>
+    <div class="feature" data-i18n="feature2">⚡ Instant registration</div>
+    <div class="feature" data-i18n="feature3">📱 Easy to play from your phone</div>
   </div>
 
-  <div class="container hidden" id="game">
-    <h2>ركلات الترجيح - PredictorPro</h2>
-    <div class="progress" id="progress">
-      <div class="step">×2</div>
-      <div class="step">×4</div>
-      <div class="step">×12</div>
-      <div class="step">×20</div>
-      <div class="step">×32</div>
-    </div>
-    <div class="grid" id="grid">
-      <!-- 15 cells -->
-      ${Array(15).fill().map((_,i) => `<div class="cell" data-id="${i+1}">⚽</div>`).join('')}
-    </div>
-    <button onclick="getSignal()" id="signalBtn">الحصول على إشارة</button>
-    <div class="faq">
-      <h3>الأسئلة الشائعة</h3>
-      <p>1. كيف تعمل الإشارة؟</p>
-      <p>عند الضغط على «الحصول على إشارة»، ... يظهر كرة واحدة — وهي «الإشارة» للرهان.</p>
-      <p>2. ماذا تعني المراحل الخمس؟</p>
-      <p>كل نقرة تولّد إشارة جديدة (حتى 5) ...</p>
-      <p>3. كيف أدير البنك الخاص بي؟</p>
-      <p>ننصح بتثبيت الربح عند الوصول إلى الخطوة الثالثة أو الرابعة ...</p>
-    </div>
+  <div class="features" style="margin-top: 60px;">
+    <h2 style="color:#00c2ff; margin-bottom: 20px;">🗣️ ශ්‍රී ලංකාවේ ක්‍රීඩකයන්ගේ අදහස්</h2>
+    <div class="feature">"මම මුලින්ම 1500 දමා බැලුවා. තත්පර 30න්ම බෝනස් එක ලැබුණා!" — <strong>සචින් (Galle)</strong></div>
+    <div class="feature">"බොහෝම ස්තුතියි! මට 14000 ක් ලැබුණා සහ දැන්මත් ක්‍රීඩා කරනවා." — <strong>නිපුන් (Kandy)</strong></div>
+    <div class="feature">"විශ්වාසයක් නැතුව දැක්කා. දැන් නම් මම හරිම සතුටුයි!" — <strong>ශිහාන් (Colombo)</strong></div>
+    <div class="feature">"මට විරැට් ගේ උපදෙස් වලට අනුව ක්‍රීඩා කරලා ලාභ වුණා!" — <strong>දිලිනි (Matara)</strong></div>
+    <div class="feature">"මෙයාව මම මගේ මිතුරන්ටත් කිව්වා. ඔවුන්ටත් බෝනස් ලැබුණා!" — <strong>අනුෂ්කා (Kurunegala)</strong></div>
   </div>
 
   <script>
-    let step = 0;
-    function login(){
-      const id = document.getElementById('idInput').value;
-      if(/^\d{10}$/.test(id)){
-        document.getElementById('login').classList.add('hidden');
-        document.getElementById('game').classList.remove('hidden');
-      } else alert('الـ ID لازم يكون 10 أرقام!');
+    const translations = {
+      en: {
+        bonus: '🎉 +14000 LKR BONUS!',
+        urgent: 'Deposit within 20 minutes',
+        minDeposit: 'Minimum deposit: <strong>1500 LKR</strong>',
+        timerLabel: 'Bonus ends in:',
+        title: '🎁 You have a bonus on your first deposit!',
+        subtitle: 'Activate your bonus and start winning now',
+        button: 'Claim Bonus 🎁',
+        feature1: '💰 Up to 14000 LKR on your first deposit',
+        feature2: '⚡ Instant registration',
+        feature3: '📱 Easy to play from your phone'
+      },
+      si: {
+        bonus: '🎉 මුලික තැන්පතු සඳහා 14000 LKR බෝනස්!',
+        urgent: 'මිනිත්තු 20 ඇතුළත තැන්පතු කරන්න',
+        minDeposit: 'අවම තැන්පතුව: <strong>1500 LKR</strong>',
+        timerLabel: 'බෝනස් අවසන් වන්නේ:',
+        title: '🎁 ඔබට මුල් තැන්පතුව සඳහා බෝනස් ඇත!',
+        subtitle: 'බෝනස් සක්‍රීය කර දැන්ම ජයග්‍රහණය ආරම්භ කරන්න',
+        button: 'බෝනස් එක ගන්න 🎁',
+        feature1: '💰 මුල් තැන්පතුව සඳහා 14000 LKR දක්වා',
+        feature2: '⚡ ක්ෂණික ලියාපදිංචිය',
+        feature3: '📱 ජංගම දුරකථනයෙන් පහසුවෙන් ක්‍රීඩා කරන්න'
+      }
+    };
+
+    function setLanguage(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        el.innerHTML = translations[lang][key];
+      });
+
+      document.getElementById('lang-en').classList.remove('active');
+      document.getElementById('lang-si').classList.remove('active');
+      document.getElementById('lang-' + lang).classList.add('active');
     }
-    function getSignal(){
-      const cells = document.querySelectorAll('.cell');
-      cells.forEach(c => c.classList.remove('active'));
-      const rand = Math.floor(Math.random()*cells.length);
-      cells[rand].classList.add('active');
-      // animate
-      setTimeout(() => {
-        if(step < 4) step++;
-        const progress = document.getElementById('progress').children;
-        Array.from(progress).forEach((el,i)=> el.classList.toggle('active', i===step));
-      }, 3000); // 3s simulation
-    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      setLanguage('en');
+    });
   </script>
 </body>
 </html>
