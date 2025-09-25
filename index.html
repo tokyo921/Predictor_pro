@@ -1,213 +1,137 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="si">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1xBET — Бонус на первый депозит</title>
-  
-  <!-- Meta preview for social sharing -->
-  <meta property="og:title" content="1xBET — BONUS!" />
-  <meta property="og:description" content="BONUS — 1500 LKR." />
-  <meta property="og:image" content="/mnt/data/image.png" />
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aviator Predictor Bot</title>
   <style>
     body {
+      background-color: #0f0f0f;
+      color: #00ff9f;
+      font-family: 'Courier New', monospace;
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #0a1f44, #003366);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      padding: 0;
+    }
+    header {
+      background-color: #000;
+      padding: 20px;
       text-align: center;
-      padding: 40px 20px;
+      border-bottom: 2px solid #00ff9f;
     }
-    .lang-buttons {
-      margin-bottom: 20px;
+    header h1 {
+      margin: 0;
+      font-size: 28px;
     }
-    .lang-buttons button {
-      background: #003366;
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      padding: 20px;
+    }
+    .button {
+      background-color: #00ff9f;
+      color: #000;
+      padding: 14px 24px;
       border: none;
-      color: white;
-      font-size: 1rem;
-      padding: 8px 15px;
-      margin: 0 5px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .lang-buttons button:hover {
-      background: #002244;
-    }
-    .logo {
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: #00c2ff;
-      margin-bottom: 30px;
-    }
-    .big-bonus {
-      background: #00c2ff;
-      color: #003366;
-      padding: 20px 30px;
-      font-size: 2rem;
-      font-weight: bold;
-      border-radius: 12px;
-      margin-bottom: 25px;
-      box-shadow: 0 0 15px rgba(0, 194, 255, 0.4);
-    }
-    .urgent-message {
-      background: #ffcc00;
-      color: #003366;
-      padding: 12px 20px;
-      font-size: 1rem;
       border-radius: 10px;
-      margin-bottom: 15px;
-      max-width: 400px;
-      box-shadow: 0 0 10px rgba(255, 204, 0, 0.6);
-      animation: blink 2s infinite;
-    }
-    .urgent-message a {
-      color: #003366;
       font-weight: bold;
-      text-decoration: underline;
-    }
-    #timer {
-      font-size: 1.2rem;
-      color: #ffcc00;
-      margin-bottom: 25px;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; }
-    }
-    .title {
-      font-size: 1.8rem;
-      margin-bottom: 20px;
-    }
-    .subtitle {
-      font-size: 1.1rem;
-      margin-bottom: 40px;
-      color: #ddd;
-    }
-    .bonus-button {
-      background-color: #00c2ff;
-      color: #fff;
-      padding: 15px 30px;
-      font-size: 1.2rem;
-      border: none;
-      border-radius: 6px;
       cursor: pointer;
       text-decoration: none;
-      box-shadow: 0 0 20px #00c2ff, 0 0 30px #00c2ff, 0 0 40px #00c2ff;
-      animation: pulse 1.5s infinite;
+      transition: transform 0.2s;
     }
-    .bonus-button:hover {
-      background-color: #00aadd;
+    .button:hover {
+      transform: scale(1.05);
     }
-    @keyframes pulse {
-      0% {
-        box-shadow: 0 0 20px #00c2ff, 0 0 30px #00c2ff, 0 0 40px #00c2ff;
-      }
-      50% {
-        box-shadow: 0 0 30px #00f0ff, 0 0 40px #00f0ff, 0 0 50px #00f0ff;
-      }
-      100% {
-        box-shadow: 0 0 20px #00c2ff, 0 0 30px #00c2ff, 0 0 40px #00c2ff;
-      }
+    .ticker {
+      background-color: #121212;
+      color: #00ff9f;
+      padding: 10px;
+      border-top: 1px solid #00ff9f;
+      border-bottom: 1px solid #00ff9f;
+      font-weight: bold;
     }
-    .features {
-      margin-top: 50px;
-      max-width: 400px;
+    .main-box {
+      background-color: #1a1a1a;
+      padding: 30px;
+      margin: 20px auto;
+      max-width: 800px;
+      border-radius: 12px;
+      border: 1px solid #00ff9f;
+      opacity: 0;
+      animation: fadeIn 1.2s ease-in-out forwards;
     }
-    .feature {
-      background: rgba(255,255,255,0.05);
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 15px;
+    .column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
     }
-    /* Адаптивность */
-    @media(max-width: 500px) {
-      .title { font-size: 1.5rem; }
-      .bonus-button { width: 100%; font-size: 1rem; }
-      .big-bonus { font-size: 1.5rem; padding: 15px; }
+    .column .left p,
+    .column .right p {
+      margin: 10px 0;
+      font-weight: bold;
+    }
+    .game-box {
+      background-color: #222;
+      margin: 40px auto;
+      padding: 40px;
+      width: 300px;
+      border-radius: 12px;
+      border: 2px dashed #00ff9f;
+      color: #fff;
+      text-align: center;
+      font-size: 18px;
+      opacity: 0;
+      animation: fadeIn 1.2s ease-in-out 0.5s forwards;
+    }
+    .glow {
+      animation: glow 1.5s infinite;
+    }
+    @keyframes glow {
+      0% { box-shadow: 0 0 5px #00ff9f; }
+      50% { box-shadow: 0 0 20px #00ff9f; }
+      100% { box-shadow: 0 0 5px #00ff9f; }
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
-
 <body>
-  <div class="lang-buttons">
-    <button id="lang-en" onclick="setLanguage('en')">🇬🇧 English</button>
-    <button id="lang-si" onclick="setLanguage('si')">🇱🇰 Sinhala</button>
+  <header>
+    <h1>🚀 Aviator Signal Predictor</h1>
+    <p>අනන්‍ය හෑක් ක්‍රමයක් - ගෙන ඒමට ඉදිරිපත් වූ ගණන්</p>
+  </header>
+  <div class="buttons">
+    <a href="https://affpa.top/L?tag=d_3713491m_29091c_&site=3713491&ad=29091&r=registration" class="button">වෙබ් අඩවියට පිවිසෙන්න</a>
+    <a href="id.html" class="button glow">බොටයට පිවිසෙන්න</a>
   </div>
-  <div class="logo">1xBET</div>
-  <div class="big-bonus" data-i18n="bonus">🎉 +14000 LKR BONUS!</div>
-  <div class="urgent-message">
-    ⏳ <a href="https://affpa.top/L?tag=d_3713491m_29091c_&site=3713491&ad=29091&r=registration" target="_blank" data-i18n="urgent">Deposit within 20 minutes</a> — and your bonus will be activated!<br>
-    <span data-i18n="minDeposit">Minimum deposit: <strong>1500 LKR</strong></span>
+  <div class="ticker">
+    <marquee behavior="scroll" direction="left">
+      🟢 Kasun ලැබූයේ 8 400 LKR | 🟢 Minul x19.4 ලබාගත්තා 600 LKR ත්‍යාගයකින් | 🟢 Sameera උදෑසන ක්‍රිඩාවේදී 13 200 LKR ලැබුවා | 🟢 Amaya x22.1 ලබාගෙන 900 LKR වලින් දිනා ගත්තා | 🟢 Dilan රාත්‍රී session එකෙන් 10 500 LKR | 🟢 Prabodha x25.7 මත 18 000 LKR | 🟢 Nimesha x20.4 න් 14 700 LKR | 🟢 Sahan 1 000 LKR න් 16 900 LKR ක් දිනාගත්තා
+    </marquee>
   </div>
-  <div id="timer"><span data-i18n="timerLabel">Bonus ends in:</span> <span id="countdown">20:00</span></div>
-  <div class="title" data-i18n="title">🎁 You have a bonus on your first deposit!</div>
-  <div class="subtitle" data-i18n="subtitle">Activate your bonus and start winning now</div>
-  <a class="bonus-button" href="https://affpa.top/L?tag=d_3713491m_29091c_&site=3713491&ad=29091&r=registration" target="_blank" data-i18n="button">
-    Claim Bonus 🎁
-  </a>
-  <div class="features">
-    <div class="feature" data-i18n="feature1">💰 Up to 14000 LKR on your first deposit</div>
-    <div class="feature" data-i18n="feature2">⚡ Instant registration</div>
-    <div class="feature" data-i18n="feature3">📱 Easy to play from your phone</div>
+  <div class="main-box">
+    <div class="column">
+      <div class="left">
+        <p>🧑‍💻 Dilshan: "එක රාත්‍රියකින් 18 000 LKR. බොට් එක ඇත්තටම වැඩ කරනවා!"</p>
+        <p>🧑‍💻 Nadeesha: "සංග්‍රහ අනුව ක්‍රීඩා කළා - දින 2කින් +12 300 LKR!"</p>
+        <p>🧑‍💻 Tharindu: "700 LKR සිට 11 400 LKR දක්වා!"</p>
+        <p>🧑‍💻 Sanjeewa: "ඇසුරක් ලෙස පරීක්ෂා කළා - මුලින්ම 9 300 LKR!"</p>
+        <p>🧑‍💻 Ishara: "දැන් මට බොට් සංග්‍රහය මතයි. සතියක් තුළ 14 000 LKR!"</p>
+      </div>
+      <div class="right">
+        <p>💰 Dilshan: 18 000 LKR</p>
+        <p>💰 Nadeesha: 12 300 LKR</p>
+        <p>💰 Tharindu: 11 400 LKR</p>
+        <p>💰 Sanjeewa: 9 300 LKR</p>
+        <p>💰 Ishara: 14 000 LKR</p>
+      </div>
+    </div>
   </div>
-
-  <div class="features" style="margin-top: 60px;">
-    <h2 style="color:#00c2ff; margin-bottom: 20px;">🗣️ ශ්‍රී ලංකාවේ ක්‍රීඩකයන්ගේ අදහස්</h2>
-    <div class="feature">"මම මුලින්ම 1500 දමා බැලුවා. තත්පර 30න්ම බෝනස් එක ලැබුණා!" — <strong>සචින් (Galle)</strong></div>
-    <div class="feature">"බොහෝම ස්තුතියි! මට 14000 ක් ලැබුණා සහ දැන්මත් ක්‍රීඩා කරනවා." — <strong>නිපුන් (Kandy)</strong></div>
-    <div class="feature">"විශ්වාසයක් නැතුව දැක්කා. දැන් නම් මම හරිම සතුටුයි!" — <strong>ශිහාන් (Colombo)</strong></div>
-    <div class="feature">"මට විරැට් ගේ උපදෙස් වලට අනුව ක්‍රීඩා කරලා ලාභ වුණා!" — <strong>දිලිනි (Matara)</strong></div>
-    <div class="feature">"මෙයාව මම මගේ මිතුරන්ටත් කිව්වා. ඔවුන්ටත් බෝනස් ලැබුණා!" — <strong>අනුෂ්කා (Kurunegala)</strong></div>
+  <div class="game-box">
+    🎮 <br><br>
+    <strong>x17.3</strong> — ඊළඟ ගුණාංකය!
   </div>
-
-  <script>
-    const translations = {
-      en: {
-        bonus: '🎉 +14000 LKR BONUS!',
-        urgent: 'Deposit within 20 minutes',
-        minDeposit: 'Minimum deposit: <strong>1500 LKR</strong>',
-        timerLabel: 'Bonus ends in:',
-        title: '🎁 You have a bonus on your first deposit!',
-        subtitle: 'Activate your bonus and start winning now',
-        button: 'Claim Bonus 🎁',
-        feature1: '💰 Up to 14000 LKR on your first deposit',
-        feature2: '⚡ Instant registration',
-        feature3: '📱 Easy to play from your phone'
-      },
-      si: {
-        bonus: '🎉 මුලික තැන්පතු සඳහා 14000 LKR බෝනස්!',
-        urgent: 'මිනිත්තු 20 ඇතුළත තැන්පතු කරන්න',
-        minDeposit: 'අවම තැන්පතුව: <strong>1500 LKR</strong>',
-        timerLabel: 'බෝනස් අවසන් වන්නේ:',
-        title: '🎁 ඔබට මුල් තැන්පතුව සඳහා බෝනස් ඇත!',
-        subtitle: 'බෝනස් සක්‍රීය කර දැන්ම ජයග්‍රහණය ආරම්භ කරන්න',
-        button: 'බෝනස් එක ගන්න 🎁',
-        feature1: '💰 මුල් තැන්පතුව සඳහා 14000 LKR දක්වා',
-        feature2: '⚡ ක්ෂණික ලියාපදිංචිය',
-        feature3: '📱 ජංගම දුරකථනයෙන් පහසුවෙන් ක්‍රීඩා කරන්න'
-      }
-    };
-
-    function setLanguage(lang) {
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        el.innerHTML = translations[lang][key];
-      });
-
-      document.getElementById('lang-en').classList.remove('active');
-      document.getElementById('lang-si').classList.remove('active');
-      document.getElementById('lang-' + lang).classList.add('active');
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-      setLanguage('en');
-    });
-  </script>
 </body>
 </html>
